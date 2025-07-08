@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libvislab_field.a CMakeFiles/vislab_field.dir/src/init_field.cpp.o
+/usr/bin/ranlib ../../lib/libvislab_field.a

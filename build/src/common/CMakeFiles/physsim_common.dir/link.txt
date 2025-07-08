@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libphyssim_common.a CMakeFiles/physsim_common.dir/src/imgui_helper.cpp.o CMakeFiles/physsim_common.dir/src/physsim_window.cpp.o CMakeFiles/physsim_common.dir/src/rigid_body.cpp.o CMakeFiles/physsim_common.dir/src/rigid_body_integrator.cpp.o
+/usr/bin/ranlib ../../lib/libphyssim_common.a

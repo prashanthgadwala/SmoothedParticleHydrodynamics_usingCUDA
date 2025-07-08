@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.18)
 
+# Set CUDA host compiler before project declaration to resolve compatibility issues
+set(CMAKE_CUDA_HOST_COMPILER clang-14)
+
 project(vislab
         LANGUAGES CXX CUDA
         DESCRIPTION "VisLab framework by Professorship for Visual Computing at FAU Erlangen-Nuernberg."

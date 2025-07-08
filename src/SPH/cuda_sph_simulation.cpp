@@ -2,17 +2,23 @@
 #include <vislab/core/array.hpp>
 #include <iostream>
 
+// CUDA error checking macro
+#define CUDA_CHECK(err) checkCudaError(err, __FILE__, __LINE__)
+
 namespace physsim {
 
 CudaSPHSimulation::CudaSPHSimulation() 
-    : memory_manager(std::make_unique<CudaMemoryManager>())
-    , d_positions(nullptr), d_velocities(nullptr), d_accelerations(nullptr)
+    : d_positions(nullptr), d_velocities(nullptr), d_accelerations(nullptr)
     , d_densities(nullptr), d_pressures(nullptr), d_masses(nullptr)
     , d_boundary_positions(nullptr), d_boundary_masses(nullptr), d_gravity(nullptr)
     , max_particles(0), max_boundary_particles(0)
     , num_particles(0), num_boundary_particles(0)
     , support_radius(0.1f), rest_density(1000.0f), stiffness(1000.0f)
     , exponent(7.0f), viscosity(0.01f), gravity(0, -9.81f, 0)
+    , domain_min_x(-1.0f), domain_max_x(1.0f)
+    , domain_min_y(-1.0f), domain_max_y(1.0f)
+    , domain_min_z(-1.0f), domain_max_z(1.0f)
+    , boundary_damping(0.8f)
 {
 }
 
@@ -21,7 +27,7 @@ CudaSPHSimulation::~CudaSPHSimulation() {
 }
 
 bool CudaSPHSimulation::initialize(int max_particles, int max_boundary_particles) {
-    if (!cuda_utils::initCuda()) {
+    if (!initCuda()) {
         std::cerr << "Failed to initialize CUDA" << std::endl;
         return false;
     }
@@ -44,7 +50,7 @@ bool CudaSPHSimulation::initialize(int max_particles, int max_boundary_particles
     
     // Upload gravity to device
     float gravity_data[3] = {gravity.x(), gravity.y(), gravity.z()};
-    memory_manager->copyHostToDevice(d_gravity, gravity_data, 3 * sizeof(float));
+    copyHostToDevice(d_gravity, gravity_data, 3 * sizeof(float));
     
     std::cout << "CUDA SPH simulation initialized with " 
               << max_particles << " max particles and " 
@@ -65,8 +71,19 @@ void CudaSPHSimulation::setParameters(float support_radius, float rest_density, 
     // Update gravity on device
     if (d_gravity) {
         float gravity_data[3] = {gravity.x(), gravity.y(), gravity.z()};
-        memory_manager->copyHostToDevice(d_gravity, gravity_data, 3 * sizeof(float));
+        copyHostToDevice(d_gravity, gravity_data, 3 * sizeof(float));
     }
+}
+
+void CudaSPHSimulation::setBoundaryDomain(float min_x, float max_x, float min_y, float max_y, 
+                                         float min_z, float max_z, float damping) {
+    domain_min_x = min_x;
+    domain_max_x = max_x;
+    domain_min_y = min_y;
+    domain_max_y = max_y;
+    domain_min_z = min_z;
+    domain_max_z = max_z;
+    boundary_damping = damping;
 }
 
 void CudaSPHSimulation::uploadParticleData(
@@ -87,13 +104,13 @@ void CudaSPHSimulation::uploadParticleData(
     
     // Copy masses
     for (int i = 0; i < num_particles; ++i) {
-        h_masses[i] = masses->getValue(i);
+        h_masses[i] = masses->getValue(i).x();
     }
     
     // Upload to device
-    memory_manager->copyHostToDevice(d_positions, h_positions.data(), 3 * num_particles * sizeof(float));
-    memory_manager->copyHostToDevice(d_velocities, h_velocities.data(), 3 * num_particles * sizeof(float));
-    memory_manager->copyHostToDevice(d_masses, h_masses.data(), num_particles * sizeof(float));
+    copyHostToDevice(d_positions, h_positions.data(), 3 * num_particles * sizeof(float));
+    copyHostToDevice(d_velocities, h_velocities.data(), 3 * num_particles * sizeof(float));
+    copyHostToDevice(d_masses, h_masses.data(), num_particles * sizeof(float));
 }
 
 void CudaSPHSimulation::uploadBoundaryData(
@@ -112,12 +129,12 @@ void CudaSPHSimulation::uploadBoundaryData(
     
     // Copy masses
     for (int i = 0; i < num_boundary_particles; ++i) {
-        h_boundary_masses[i] = boundary_masses->getValue(i);
+        h_boundary_masses[i] = boundary_masses->getValue(i).x();
     }
     
     // Upload to device
-    memory_manager->copyHostToDevice(d_boundary_positions, h_boundary_positions.data(), 3 * num_boundary_particles * sizeof(float));
-    memory_manager->copyHostToDevice(d_boundary_masses, h_boundary_masses.data(), num_boundary_particles * sizeof(float));
+    copyHostToDevice(d_boundary_positions, h_boundary_positions.data(), 3 * num_boundary_particles * sizeof(float));
+    copyHostToDevice(d_boundary_masses, h_boundary_masses.data(), num_boundary_particles * sizeof(float));
 }
 
 void CudaSPHSimulation::step(float dt) {
@@ -148,6 +165,15 @@ void CudaSPHSimulation::step(float dt) {
         d_positions, d_velocities, d_accelerations, d_gravity,
         num_particles, dt
     );
+    
+    // Step 5: Enforce boundary collisions
+    cuda_enforce_boundary_collisions(
+        d_positions, d_velocities, num_particles,
+        domain_min_x, domain_max_x,
+        domain_min_y, domain_max_y,
+        domain_min_z, domain_max_z,
+        boundary_damping
+    );
 }
 
 void CudaSPHSimulation::downloadResults(
@@ -159,10 +185,10 @@ void CudaSPHSimulation::downloadResults(
     if (num_particles == 0) return;
     
     // Download from device
-    memory_manager->copyDeviceToHost(h_positions.data(), d_positions, 3 * num_particles * sizeof(float));
-    memory_manager->copyDeviceToHost(h_velocities.data(), d_velocities, 3 * num_particles * sizeof(float));
-    memory_manager->copyDeviceToHost(h_densities.data(), d_densities, num_particles * sizeof(float));
-    memory_manager->copyDeviceToHost(h_pressures.data(), d_pressures, num_particles * sizeof(float));
+    copyDeviceToHost(h_positions.data(), d_positions, 3 * num_particles * sizeof(float));
+    copyDeviceToHost(h_velocities.data(), d_velocities, 3 * num_particles * sizeof(float));
+    copyDeviceToHost(h_densities.data(), d_densities, num_particles * sizeof(float));
+    copyDeviceToHost(h_pressures.data(), d_pressures, num_particles * sizeof(float));
     
     // Convert back to Eigen arrays
     copyFloatToEigen(h_positions, positions);
@@ -175,25 +201,61 @@ void CudaSPHSimulation::downloadResults(
     }
 }
 
+// CUDA Memory Management Functions
+void* CudaSPHSimulation::allocateDevice(size_t size) {
+    void* ptr;
+    cudaError_t error = cudaMalloc(&ptr, size);
+    if (error != cudaSuccess) {
+        std::cerr << "CUDA malloc failed: " << cudaGetErrorString(error) << std::endl;
+        return nullptr;
+    }
+    allocated_ptrs.push_back(ptr);
+    return ptr;
+}
+
+void CudaSPHSimulation::freeDevice(void* ptr) {
+    if (ptr) {
+        cudaFree(ptr);
+        auto it = std::find(allocated_ptrs.begin(), allocated_ptrs.end(), ptr);
+        if (it != allocated_ptrs.end()) {
+            allocated_ptrs.erase(it);
+        }
+    }
+}
+
+void CudaSPHSimulation::copyHostToDevice(void* device_ptr, const void* host_ptr, size_t size) {
+    CUDA_CHECK(cudaMemcpy(device_ptr, host_ptr, size, cudaMemcpyHostToDevice));
+}
+
+void CudaSPHSimulation::copyDeviceToHost(void* host_ptr, const void* device_ptr, size_t size) {
+    CUDA_CHECK(cudaMemcpy(host_ptr, device_ptr, size, cudaMemcpyDeviceToHost));
+}
+
 void CudaSPHSimulation::allocateDeviceMemory() {
     // Allocate particle data
-    d_positions = static_cast<float*>(memory_manager->allocateDevice(3 * max_particles * sizeof(float)));
-    d_velocities = static_cast<float*>(memory_manager->allocateDevice(3 * max_particles * sizeof(float)));
-    d_accelerations = static_cast<float*>(memory_manager->allocateDevice(3 * max_particles * sizeof(float)));
-    d_densities = static_cast<float*>(memory_manager->allocateDevice(max_particles * sizeof(float)));
-    d_pressures = static_cast<float*>(memory_manager->allocateDevice(max_particles * sizeof(float)));
-    d_masses = static_cast<float*>(memory_manager->allocateDevice(max_particles * sizeof(float)));
+    d_positions = static_cast<float*>(allocateDevice(3 * max_particles * sizeof(float)));
+    d_velocities = static_cast<float*>(allocateDevice(3 * max_particles * sizeof(float)));
+    d_accelerations = static_cast<float*>(allocateDevice(3 * max_particles * sizeof(float)));
+    d_densities = static_cast<float*>(allocateDevice(max_particles * sizeof(float)));
+    d_pressures = static_cast<float*>(allocateDevice(max_particles * sizeof(float)));
+    d_masses = static_cast<float*>(allocateDevice(max_particles * sizeof(float)));
     
     // Allocate boundary data
-    d_boundary_positions = static_cast<float*>(memory_manager->allocateDevice(3 * max_boundary_particles * sizeof(float)));
-    d_boundary_masses = static_cast<float*>(memory_manager->allocateDevice(max_boundary_particles * sizeof(float)));
+    d_boundary_positions = static_cast<float*>(allocateDevice(3 * max_boundary_particles * sizeof(float)));
+    d_boundary_masses = static_cast<float*>(allocateDevice(max_boundary_particles * sizeof(float)));
     
     // Allocate gravity
-    d_gravity = static_cast<float*>(memory_manager->allocateDevice(3 * sizeof(float)));
+    d_gravity = static_cast<float*>(allocateDevice(3 * sizeof(float)));
 }
 
 void CudaSPHSimulation::deallocateDeviceMemory() {
-    // Memory manager will automatically free all allocated pointers
+    // Free all allocated memory
+    for (void* ptr : allocated_ptrs) {
+        if (ptr) {
+            cudaFree(ptr);
+        }
+    }
+    allocated_ptrs.clear();
 }
 
 void CudaSPHSimulation::copyEigenToFloat(const std::shared_ptr<vislab::Array3f>& eigen_array, std::vector<float>& float_array) {
@@ -209,6 +271,32 @@ void CudaSPHSimulation::copyFloatToEigen(const std::vector<float>& float_array, 
     for (int i = 0; i < static_cast<int>(eigen_array->getSize()); ++i) {
         Eigen::Vector3f vec(float_array[3*i], float_array[3*i + 1], float_array[3*i + 2]);
         eigen_array->setValue(i, vec);
+    }
+}
+
+bool CudaSPHSimulation::initCuda() {
+    int deviceCount;
+    cudaError_t error = cudaGetDeviceCount(&deviceCount);
+    if (error != cudaSuccess || deviceCount == 0) {
+        std::cerr << "No CUDA devices found: " << cudaGetErrorString(error) << std::endl;
+        return false;
+    }
+    
+    // Get device properties
+    cudaDeviceProp deviceProp;
+    CUDA_CHECK(cudaGetDeviceProperties(&deviceProp, 0));
+    std::cout << "Using CUDA device: " << deviceProp.name << std::endl;
+    
+    // Set device
+    CUDA_CHECK(cudaSetDevice(0));
+    
+    return true;
+}
+
+void CudaSPHSimulation::checkCudaError(cudaError_t error, const char* file, int line) {
+    if (error != cudaSuccess) {
+        std::cerr << "CUDA error at " << file << ":" << line << " - " << cudaGetErrorString(error) << std::endl;
+        exit(1);
     }
 }
 

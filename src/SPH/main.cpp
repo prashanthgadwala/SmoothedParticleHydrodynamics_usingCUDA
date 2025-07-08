@@ -166,6 +166,7 @@ namespace physsim
             mExponent      = 7;
             mRho0          = 1000;
             mSupportRadius = 0.5f;   // Smaller particles for finer detail
+            mBoundaryDamping = 0.5f; // Damping factor for boundary collisions
 
             // Initialize CUDA simulation
             mSimulationMode = SimulationMode::COMPARE_BOTH; // Compare OpenMP vs CUDA
@@ -173,7 +174,7 @@ namespace physsim
             
             if (mUseCuda) {
                 mCudaSimulation = std::make_unique<CudaSPHSimulation>();
-                if (!mCudaSimulation->initialize(10000, 5000)) { // max particles, max boundary particles
+                if (!mCudaSimulation->initialize(25000, 70000)) { // Increased limits: max particles, max boundary particles
                     std::cerr << "Failed to initialize CUDA simulation, falling back to OpenMP" << std::endl;
                     mUseCuda = false;
                     mSimulationMode = SimulationMode::OPENMP_ONLY;
@@ -236,8 +237,8 @@ namespace physsim
         void restart() override
         {
             // fill a portion of the domain with particles (uniform distribution with stratified sampling)
-            Eigen::AlignedBox3f domainToFill(Eigen::Vector3f(-8, -3, 2), Eigen::Vector3f(-2, 3, 9));
-            Eigen::Vector3i initialRes = ((domainToFill.max() - domainToFill.min()) / mSupportRadius * 2).cast<int>();
+            Eigen::AlignedBox3f domainToFill(Eigen::Vector3f(-6, -2, 3), Eigen::Vector3f(-3, 2, 6)); // Smaller domain for reasonable particle count
+            Eigen::Vector3i initialRes = ((domainToFill.max() - domainToFill.min()) / mSupportRadius * 1.5).cast<int>(); // Reduced density
             mPositions->setSize(initialRes.prod());
             mVelocities->setSize(initialRes.prod());
             mAccelerations->setSize(initialRes.prod());
@@ -260,7 +261,7 @@ namespace physsim
                     }
 
             // place boundary particles on the walls
-            Eigen::Vector3i boundaryRes = ((mDomain.max() - mDomain.min()) / mSupportRadius * 4).cast<int>();
+            Eigen::Vector3i boundaryRes = ((mDomain.max() - mDomain.min()) / mSupportRadius * 2).cast<int>(); // Reduced boundary density
             mBoundaryParticles->setSize(2 * boundaryRes.x() * boundaryRes.y() + 2 * boundaryRes.y() * boundaryRes.z() + 2 * boundaryRes.x() * boundaryRes.z());
             Eigen::Index linearIndex = 0;
             for (int iy = 0; iy < boundaryRes.y(); ++iy)
@@ -579,7 +580,55 @@ namespace physsim
                 mPositions->setValue(i, xi_new);
                 mVelocities->setValue(i, vi_new);
             }
-            } // end of OpenMP simulation path
+
+            // enforce boundary collisions (OpenMP)
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
+            for (Eigen::Index i = 0; i < mPositions->getSize(); ++i)
+            {
+                Eigen::Vector3f pos = mPositions->getValue(i);
+                Eigen::Vector3f vel = mVelocities->getValue(i);
+                bool collision = false;
+
+                // Check and enforce domain boundaries
+                if (pos.x() < mDomain.min().x()) {
+                    pos.x() = mDomain.min().x();
+                    vel.x() = -mBoundaryDamping * vel.x();
+                    collision = true;
+                }
+                if (pos.x() > mDomain.max().x()) {
+                    pos.x() = mDomain.max().x();
+                    vel.x() = -mBoundaryDamping * vel.x();
+                    collision = true;
+                }
+                if (pos.y() < mDomain.min().y()) {
+                    pos.y() = mDomain.min().y();
+                    vel.y() = -mBoundaryDamping * vel.y();
+                    collision = true;
+                }
+                if (pos.y() > mDomain.max().y()) {
+                    pos.y() = mDomain.max().y();
+                    vel.y() = -mBoundaryDamping * vel.y();
+                    collision = true;
+                }
+                if (pos.z() < mDomain.min().z()) {
+                    pos.z() = mDomain.min().z();
+                    vel.z() = -mBoundaryDamping * vel.z();
+                    collision = true;
+                }
+                if (pos.z() > mDomain.max().z()) {
+                    pos.z() = mDomain.max().z();
+                    vel.z() = -mBoundaryDamping * vel.z();
+                    collision = true;
+                }
+
+                // Update position and velocity if collision occurred
+                if (collision) {
+                    mPositions->setValue(i, pos);
+                    mVelocities->setValue(i, vel);
+                }
+            }
         }
 
         void runGpuSimulation(double dt) {
@@ -587,6 +636,14 @@ namespace physsim
             
             // Update CUDA simulation parameters
             mCudaSimulation->setParameters(mSupportRadius, mRho0, mStiffness, mExponent, mViscosity, mGravity);
+            
+            // Set boundary domain with current damping factor
+            mCudaSimulation->setBoundaryDomain(
+                mDomain.min().x(), mDomain.max().x(),
+                mDomain.min().y(), mDomain.max().y(),
+                mDomain.min().z(), mDomain.max().z(),
+                mBoundaryDamping
+            );
             
             // Upload current data to GPU
             mCudaSimulation->uploadParticleData(mPositions, mVelocities, mMasses);
@@ -616,6 +673,11 @@ namespace physsim
             ImGui::SliderFloat("stiffness", &mStiffness, 0, 200000);
             ImGui::SliderFloat("exponent", &mExponent, 0, 10);
             ImGui::SliderFloat("viscosity", &mViscosity, 0, 50);
+            
+            // Boundary parameters
+            ImGui::Separator();
+            ImGui::Text("Boundary Parameters:");
+            ImGui::SliderFloat("boundary damping", &mBoundaryDamping, 0.0f, 1.0f);
             
             // Display current particle count
             ImGui::Separator();
@@ -761,6 +823,11 @@ namespace physsim
          * @brief Gravity vector.
          */
         Eigen::Vector3f mGravity;
+
+        /**
+         * @brief Boundary damping factor for collisions.
+         */
+        float mBoundaryDamping;
 
         /**
          * @brief CUDA simulation instance.
