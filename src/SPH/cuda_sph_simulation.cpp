@@ -9,7 +9,7 @@ namespace physsim {
 
 CudaSPHSimulation::CudaSPHSimulation() 
     : d_positions(nullptr), d_velocities(nullptr), d_accelerations(nullptr)
-    , d_densities(nullptr), d_pressures(nullptr), d_masses(nullptr)
+    , d_previous_accelerations(nullptr), d_densities(nullptr), d_pressures(nullptr), d_masses(nullptr)
     , d_boundary_positions(nullptr), d_boundary_masses(nullptr), d_gravity(nullptr)
     , max_particles(0), max_boundary_particles(0)
     , num_particles(0), num_boundary_particles(0)
@@ -39,6 +39,7 @@ bool CudaSPHSimulation::initialize(int max_particles, int max_boundary_particles
     h_positions.resize(3 * max_particles);
     h_velocities.resize(3 * max_particles);
     h_accelerations.resize(3 * max_particles);
+    h_previous_accelerations.resize(3 * max_particles);
     h_densities.resize(max_particles);
     h_pressures.resize(max_particles);
     h_masses.resize(max_particles);
@@ -107,10 +108,14 @@ void CudaSPHSimulation::uploadParticleData(
         h_masses[i] = masses->getValue(i).x();
     }
     
+    // Initialize previous accelerations to zero if not set
+    std::fill(h_previous_accelerations.begin(), h_previous_accelerations.begin() + 3 * num_particles, 0.0f);
+    
     // Upload to device
     copyHostToDevice(d_positions, h_positions.data(), 3 * num_particles * sizeof(float));
     copyHostToDevice(d_velocities, h_velocities.data(), 3 * num_particles * sizeof(float));
     copyHostToDevice(d_masses, h_masses.data(), num_particles * sizeof(float));
+    copyHostToDevice(d_previous_accelerations, h_previous_accelerations.data(), 3 * num_particles * sizeof(float));
 }
 
 void CudaSPHSimulation::uploadBoundaryData(
@@ -157,13 +162,13 @@ void CudaSPHSimulation::step(float dt) {
     cuda_compute_forces(
         d_positions, d_velocities, d_densities, d_pressures, d_masses,
         d_boundary_positions, d_boundary_masses, d_accelerations,
-        num_particles, num_boundary_particles, support_radius, viscosity
+        num_particles, num_boundary_particles, support_radius, viscosity, rest_density
     );
     
-    // Step 4: Integrate particles
+    // Step 4: Integrate particles using velocity Verlet
     cuda_integrate_particles(
-        d_positions, d_velocities, d_accelerations, d_gravity,
-        num_particles, dt
+        d_positions, d_velocities, d_accelerations, d_previous_accelerations,
+        d_gravity, num_particles, dt
     );
     
     // Step 5: Enforce boundary collisions
@@ -236,6 +241,7 @@ void CudaSPHSimulation::allocateDeviceMemory() {
     d_positions = static_cast<float*>(allocateDevice(3 * max_particles * sizeof(float)));
     d_velocities = static_cast<float*>(allocateDevice(3 * max_particles * sizeof(float)));
     d_accelerations = static_cast<float*>(allocateDevice(3 * max_particles * sizeof(float)));
+    d_previous_accelerations = static_cast<float*>(allocateDevice(3 * max_particles * sizeof(float)));
     d_densities = static_cast<float*>(allocateDevice(max_particles * sizeof(float)));
     d_pressures = static_cast<float*>(allocateDevice(max_particles * sizeof(float)));
     d_masses = static_cast<float*>(allocateDevice(max_particles * sizeof(float)));

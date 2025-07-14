@@ -7,7 +7,7 @@
 #define BLOCK_SIZE 256
 #define MAX_NEIGHBORS 64
 
-// Cubic spline kernel implementation on GPU
+// Cubic spline kernel implementation on GPU (matching OpenMP implementation)
 __device__ float cubic_kernel(float r, float h) {
     const float pi = 3.14159265f;
     const float h3 = h * h * h;
@@ -20,17 +20,18 @@ __device__ float cubic_kernel(float r, float h) {
             const float q3 = q2 * q;
             return k * (6.0f * q3 - 6.0f * q2 + 1.0f);
         } else {
-            const float temp = 2.0f - q;
+            const float temp = 1.0f - q;  // Fixed to match OpenMP: (1-q) not (2-q)
             return k * 2.0f * temp * temp * temp;
         }
     }
     return 0.0f;
 }
 
-// Cubic spline kernel gradient implementation on GPU
+// Cubic spline kernel gradient implementation on GPU (matching OpenMP implementation)
 __device__ void cubic_kernel_grad(float rx, float ry, float rz, float h, float* grad_x, float* grad_y, float* grad_z) {
     const float pi = 3.14159265f;
     const float h3 = h * h * h;
+    const float l = 48.0f / (pi * h3);  // Use same normalization as OpenMP
     const float r = sqrtf(rx*rx + ry*ry + rz*rz);
     
     if (r > 1e-9f && r <= h) {
@@ -38,12 +39,15 @@ __device__ void cubic_kernel_grad(float rx, float ry, float rz, float h, float* 
         float dW_dq = 0.0f;
         
         if (q <= 0.5f) {
-            dW_dq = (8.0f / (pi * h3)) * (18.0f * q * q - 12.0f * q);
+            // OpenMP: res = m_l * q * (3.f * q - 2.f) * gradq;
+            dW_dq = l * q * (3.0f * q - 2.0f);
         } else if (q <= 1.0f) {
-            const float temp = 2.0f - q;
-            dW_dq = -(8.0f / (pi * h3)) * 6.0f * temp * temp;
+            // OpenMP: res = m_l * (-factor * factor) * gradq; where factor = 1.f - q
+            const float factor = 1.0f - q;
+            dW_dq = l * (-factor * factor);
         }
         
+        // gradq = r / (rl * m_radius) in OpenMP
         const float factor = dW_dq / (h * r);
         *grad_x = factor * rx;
         *grad_y = factor * ry;
@@ -124,8 +128,19 @@ __global__ void compute_pressure_kernel(
     if (i >= num_particles) return;
     
     float density = densities[i];
-    float pressure = stiffness * (powf(density / rest_density, exponent) - 1.0f);
-    pressures[i] = fmaxf(pressure, 0.0f);
+    float density_ratio = density / rest_density;
+    
+    // Clamp density ratio to prevent extreme pressures (key stability improvement)
+    density_ratio = fmaxf(1.0f, fminf(density_ratio, 2.0f));
+    
+    float pressure = stiffness * (powf(density_ratio, exponent) - 1.0f);
+    pressure = fmaxf(pressure, 0.0f); // clamp to prevent negative pressure
+    
+    // Additional pressure clamping for stability
+    float max_pressure = stiffness * 5.0f; // Limit maximum pressure
+    pressure = fminf(pressure, max_pressure);
+    
+    pressures[i] = pressure;
 }
 
 // Force computation kernel
@@ -141,7 +156,8 @@ __global__ void compute_forces_kernel(
     int num_particles,
     int num_boundary_particles,
     float support_radius,
-    float viscosity
+    float viscosity,
+    float rest_density
 ) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     if (i >= num_particles) return;
@@ -181,7 +197,7 @@ __global__ void compute_forces_kernel(
             float rhoj = densities[j];
             float massj = masses[j];
             
-            // Pressure gradient
+            // Pressure gradient (Equation 2): ai = Σj -mj * (pi/ρi² + pj/ρj²) * ∇Wij
             float grad_x, grad_y, grad_z;
             cubic_kernel_grad(dx, dy, dz, support_radius, &grad_x, &grad_y, &grad_z);
             
@@ -190,7 +206,7 @@ __global__ void compute_forces_kernel(
             ay -= pressure_factor * grad_y;
             az -= pressure_factor * grad_z;
             
-            // Viscosity
+            // Viscosity acceleration (standard SPH): ai = μ * Σj * (mj/ρj) * (vj - vi) * W(rij)
             float viscosity_factor = viscosity * massj / rhoj * cubic_kernel(r, support_radius);
             ax += viscosity_factor * (vxj - vxi);
             ay += viscosity_factor * (vyj - vyi);
@@ -215,10 +231,13 @@ __global__ void compute_forces_kernel(
             float grad_x, grad_y, grad_z;
             cubic_kernel_grad(dx, dy, dz, support_radius, &grad_x, &grad_y, &grad_z);
             
-            float pressure_factor = massk * pi / (rhoi * rhoi);
+            // Akinci boundary pressure acceleration (Equation 4): ai = Σk -mk * (pi/ρi² + pi/ρ0²) * ∇Wik
+            float pressure_factor = massk * (pi / (rhoi * rhoi) + pi / (rest_density * rest_density));
             ax -= pressure_factor * grad_x;
             ay -= pressure_factor * grad_y;
             az -= pressure_factor * grad_z;
+            
+            // No boundary viscosity for now - keep particles sliding along walls
         }
     }
     
@@ -227,11 +246,12 @@ __global__ void compute_forces_kernel(
     accelerations[3*i + 2] = az;
 }
 
-// Particle integration kernel
+// Particle integration kernel using Symplectic Euler (more stable for SPH)
 __global__ void integrate_particles_kernel(
     float* positions,
     float* velocities,
     const float* accelerations,
+    float* previous_accelerations,
     const float* gravity,
     int num_particles,
     float dt
@@ -243,19 +263,36 @@ __global__ void integrate_particles_kernel(
     float gy = gravity[1];
     float gz = gravity[2];
     
+    // Current total acceleration
     float ax = accelerations[3*i] + gx;
     float ay = accelerations[3*i + 1] + gy;
     float az = accelerations[3*i + 2] + gz;
     
-    // Update velocity (symplectic Euler)
-    velocities[3*i] += dt * ax;
-    velocities[3*i + 1] += dt * ay;
-    velocities[3*i + 2] += dt * az;
+    // Apply acceleration clamping to prevent exploding particles
+    float max_acceleration = 100.0f; // Reasonable limit for SPH
+    float accel_magnitude = sqrtf(ax*ax + ay*ay + az*az);
+    if (accel_magnitude > max_acceleration) {
+        float scale = max_acceleration / accel_magnitude;
+        ax *= scale;
+        ay *= scale;
+        az *= scale;
+    }
     
-    // Update position
-    positions[3*i] += dt * velocities[3*i];
-    positions[3*i + 1] += dt * velocities[3*i + 1];
-    positions[3*i + 2] += dt * velocities[3*i + 2];
+    // Symplectic Euler integration (more stable than Verlet for strong forces)
+    // Update velocity first
+    velocities[3*i] += ax * dt;
+    velocities[3*i + 1] += ay * dt;
+    velocities[3*i + 2] += az * dt;
+    
+    // Then update position with new velocity
+    positions[3*i] += velocities[3*i] * dt;
+    positions[3*i + 1] += velocities[3*i + 1] * dt;
+    positions[3*i + 2] += velocities[3*i + 2] * dt;
+    
+    // Store current acceleration as previous for debugging
+    previous_accelerations[3*i] = ax;
+    previous_accelerations[3*i + 1] = ay;
+    previous_accelerations[3*i + 2] = az;
 }
 
 // Boundary collision enforcement kernel
@@ -279,31 +316,36 @@ __global__ void enforce_boundary_collisions_kernel(
     float& vy = velocities[3*i + 1];
     float& vz = velocities[3*i + 2];
     
+    const float epsilon = 0.001f;  // Small offset to prevent sticking exactly on boundary
+    
     // X boundaries
-    if (x < domain_min_x) {
-        x = domain_min_x;
-        if (vx < 0.0f) vx = -vx * damping_factor;
-    } else if (x > domain_max_x) {
-        x = domain_max_x;
-        if (vx > 0.0f) vx = -vx * damping_factor;
+    if (x <= domain_min_x) {
+        x = domain_min_x + epsilon;
+        if (vx < 0.0f) vx = -vx * damping_factor;  // Reflect with damping
+    }
+    if (x >= domain_max_x) {
+        x = domain_max_x - epsilon;
+        if (vx > 0.0f) vx = -vx * damping_factor;  // Reflect with damping
     }
     
     // Y boundaries
-    if (y < domain_min_y) {
-        y = domain_min_y;
-        if (vy < 0.0f) vy = -vy * damping_factor;
-    } else if (y > domain_max_y) {
-        y = domain_max_y;
-        if (vy > 0.0f) vy = -vy * damping_factor;
+    if (y <= domain_min_y) {
+        y = domain_min_y + epsilon;
+        if (vy < 0.0f) vy = -vy * damping_factor;  // Reflect with damping
+    } 
+    if (y >= domain_max_y) {
+        y = domain_max_y - epsilon;
+        if (vy > 0.0f) vy = -vy * damping_factor;  // Reflect with damping
     }
     
     // Z boundaries
-    if (z < domain_min_z) {
-        z = domain_min_z;
-        if (vz < 0.0f) vz = -vz * damping_factor;
-    } else if (z > domain_max_z) {
-        z = domain_max_z;
-        if (vz > 0.0f) vz = -vz * damping_factor;
+    if (z <= domain_min_z) {
+        z = domain_min_z + epsilon;
+        if (vz < 0.0f) vz = -vz * damping_factor;  // Reflect with damping
+    } 
+    if (z >= domain_max_z) {
+        z = domain_max_z - epsilon;
+        if (vz > 0.0f) vz = -vz * damping_factor;  // Reflect with damping
     }
 }
 
@@ -364,7 +406,8 @@ void cuda_compute_forces(
     int num_particles,
     int num_boundary_particles,
     float support_radius,
-    float viscosity
+    float viscosity,
+    float rest_density
 ) {
     dim3 blockSize(BLOCK_SIZE);
     dim3 gridSize((num_particles + blockSize.x - 1) / blockSize.x);
@@ -373,7 +416,7 @@ void cuda_compute_forces(
         positions, velocities, densities, pressures, masses,
         boundary_positions, boundary_masses, accelerations,
         num_particles, num_boundary_particles,
-        support_radius, viscosity
+        support_radius, viscosity, rest_density
     );
     
     cudaDeviceSynchronize();
@@ -383,6 +426,7 @@ void cuda_integrate_particles(
     float* positions,
     float* velocities,
     const float* accelerations,
+    float* previous_accelerations,
     const float* gravity,
     int num_particles,
     float dt
@@ -391,8 +435,8 @@ void cuda_integrate_particles(
     dim3 gridSize((num_particles + blockSize.x - 1) / blockSize.x);
     
     integrate_particles_kernel<<<gridSize, blockSize>>>(
-        positions, velocities, accelerations, gravity,
-        num_particles, dt
+        positions, velocities, accelerations, previous_accelerations,
+        gravity, num_particles, dt
     );
     
     cudaDeviceSynchronize();

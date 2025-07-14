@@ -27,12 +27,12 @@ extern "C" {
         const float* densities, const float* pressures, const float* masses,
         const float* boundary_positions, const float* boundary_masses,
         float* accelerations, int num_particles, int num_boundary_particles,
-        float support_radius, float viscosity
+        float support_radius, float viscosity, float rest_density
     );
     
     void cuda_integrate_particles(
         float* positions, float* velocities, const float* accelerations,
-        const float* gravity, int num_particles, float dt
+        float* previous_accelerations, const float* gravity, int num_particles, float dt
     );
     
     void cuda_enforce_boundary_collisions(
@@ -113,6 +113,7 @@ private:
     float* d_positions;
     float* d_velocities;
     float* d_accelerations;
+    float* d_previous_accelerations;
     float* d_densities;
     float* d_pressures;
     float* d_masses;
@@ -126,6 +127,7 @@ private:
     std::vector<float> h_positions;
     std::vector<float> h_velocities;
     std::vector<float> h_accelerations;
+    std::vector<float> h_previous_accelerations;
     std::vector<float> h_densities;
     std::vector<float> h_pressures;
     std::vector<float> h_masses;

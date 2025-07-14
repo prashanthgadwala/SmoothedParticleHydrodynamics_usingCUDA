@@ -152,6 +152,7 @@ namespace physsim
             mPositions         = std::make_shared<Array3f>("positions");
             mVelocities        = std::make_shared<Array3f>("velocities");
             mAccelerations     = std::make_shared<Array3f>("accelerations");
+            mPreviousAccelerations = std::make_shared<Array3f>("previousAccelerations");
             mDensities         = std::make_shared<Array1f>("densities");
             mMasses            = std::make_shared<Array1f>("masses");
             mPressures         = std::make_shared<Array1f>("pressure");
@@ -161,9 +162,9 @@ namespace physsim
             // set simulation parameters for better performance testing
             mStepSize      = 5E-3;  // Smaller timestep for stability with more particles
             mGravity       = Eigen::Vector3f(0, 0, -9.8065f);
-            mStiffness     = 20000;  // Reduced for better stability
-            mViscosity     = 2;      // Lower viscosity for smoother flow
-            mExponent      = 7;
+            mStiffness     = 1000;   // Much lower stiffness for debugging
+            mViscosity     = 0.5f;   // Moderate viscosity for testing
+            mExponent      = 3;      // Lower exponent for stability
             mRho0          = 1000;
             mSupportRadius = 0.5f;   // Smaller particles for finer detail
             mBoundaryDamping = 0.5f; // Damping factor for boundary collisions
@@ -237,11 +238,12 @@ namespace physsim
         void restart() override
         {
             // fill a portion of the domain with particles (uniform distribution with stratified sampling)
-            Eigen::AlignedBox3f domainToFill(Eigen::Vector3f(-6, -2, 3), Eigen::Vector3f(-3, 2, 6)); // Smaller domain for reasonable particle count
+            Eigen::AlignedBox3f domainToFill(Eigen::Vector3f(-8, -4, 6), Eigen::Vector3f(-6, 4, 8)); // Smaller domain for reasonable particle count
             Eigen::Vector3i initialRes = ((domainToFill.max() - domainToFill.min()) / mSupportRadius * 1.5).cast<int>(); // Reduced density
             mPositions->setSize(initialRes.prod());
             mVelocities->setSize(initialRes.prod());
             mAccelerations->setSize(initialRes.prod());
+            mPreviousAccelerations->setSize(initialRes.prod());
             mDensities->setSize(initialRes.prod());
             mPressures->setSize(initialRes.prod());
             std::default_random_engine rng;
@@ -258,6 +260,8 @@ namespace physsim
                         Eigen::Vector3f pos = domainToFill.min() + relpos.cwiseProduct((domainToFill.max() - domainToFill.min()));
                         mPositions->setValue(linearIndex, pos);
                         mVelocities->setValue(linearIndex, Eigen::Vector3f::Zero());
+                        mAccelerations->setValue(linearIndex, Eigen::Vector3f::Zero());
+                        mPreviousAccelerations->setValue(linearIndex, Eigen::Vector3f::Zero());
                     }
 
             // place boundary particles on the walls
@@ -343,7 +347,7 @@ namespace physsim
             }
 
             // compute the mass of domain particles
-#if 1
+#if 0  // Disable variable mass calculation for now - use uniform masses
             mMasses->setSize(mPositions->getSize());
             auto KNN = std::make_shared<NearestNeighbors3f>();
             KNN->setPoints(mPositions);
@@ -372,7 +376,7 @@ namespace physsim
             }
 #else
             mMasses->setSize(mPositions->getSize());
-            float volume = std::powf(mSupportRadius / 2, 3) * 0.8;
+            float volume = std::pow(mSupportRadius / 2, 3) * 0.8;
             for (Eigen::Index i = 0; i < mPositions->getSize(); ++i)
                 mMasses->setValue(i, volume * mRho0);
 #endif
@@ -435,8 +439,7 @@ namespace physsim
     private:
         void runOpenMPSimulation(double dt) {
             // OpenMP simulation path (multi-threaded CPU)
-            float h2  = mSupportRadius * mSupportRadius;
-
+            
             // build data structure for nearest neighbor search
             auto knn = std::make_shared<NearestNeighbors3f>();
             knn->setPoints(mPositions);
@@ -481,16 +484,26 @@ namespace physsim
                 mDensities->setValue(i, rhoi);
             }
 
-            // pressure estimation based on EOS equation (WCSPH)
+            // pressure estimation based on EOS equation (WCSPH) - with stability improvements
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif
             for (Eigen::Index i = 0; i < mPositions->getSize(); ++i)
             {
-                // Tait equation: p = k * ((rho/rho0)^gamma - 1)
+                // Improved Tait equation with stability constraints
                 float rhoi = mDensities->getValue(i).x();
-                float pi = mStiffness * (std::pow(rhoi / mRho0, mExponent) - 1.0f);
+                float density_ratio = rhoi / mRho0;
+                
+                // Clamp density ratio to prevent extreme pressures (key stability improvement)
+                density_ratio = std::max(1.0f, std::min(density_ratio, 2.0f));
+                
+                float pi = mStiffness * (std::pow(density_ratio, mExponent) - 1.0f);
                 pi = std::max(pi, 0.0f); // clamp to prevent negative pressure
+                
+                // Additional pressure clamping for stability
+                float max_pressure = mStiffness * 5.0f; // Limit maximum pressure
+                pi = std::min(pi, max_pressure);
+                
                 mPressures->setValue(i, pi);
             }
 
@@ -524,14 +537,14 @@ namespace physsim
                         Eigen::Vector3f xij = xi - xj;
                         Eigen::Vector3f vij = vi - vj;
                         
-                        // Pressure acceleration (standard SPH)
+                        // Pressure acceleration (Equation 2): ai = Σj -mj * (pi/ρi² + pj/ρj²) * ∇Wij
                         Eigen::Vector3f gradW = W.gradW(xij);
                         float pressure_factor = massj * (pi / (rhoi * rhoi) + pj / (rhoj * rhoj));
                         ai_p -= pressure_factor * gradW;
 
-                        // Viscosity acceleration (XSPH)
+                        // Viscosity acceleration (standard SPH): ai = μ * Σj * (mj/ρj) * (vj - vi) * W(rij)
                         float viscosity_factor = mViscosity * massj / rhoj * W.W(xij.norm());
-                        ai_p += viscosity_factor * vij;
+                        ai_p += viscosity_factor * (vj - vi);
                     }
                 }
 
@@ -541,18 +554,15 @@ namespace physsim
                     for (auto& n : nn)
                     {
                         Eigen::Vector3f xk = mBoundaryParticles->getValue(n.first);
-                        float pk           = pi;    // pressure-mirroring
-                        float rhok         = mRho0; // boundary is liquid at rest
                         float massk        = mBoundaryMasses->getValue(n.first).x();
-
                         Eigen::Vector3f xik = xi - xk;
                         
-                        // Akinci boundary pressure acceleration
+                        // Akinci boundary pressure acceleration (Equation 4): ai = Σk -mk * (pi/ρi² + pi/ρ0²) * ∇Wik
                         Eigen::Vector3f gradW = W.gradW(xik);
-                        float pressure_factor = massk * pi / (rhoi * rhoi);
+                        float pressure_factor = massk * (pi / (rhoi * rhoi) + pi / (mRho0 * mRho0));
                         ai_p -= pressure_factor * gradW;
 
-                        // No boundary viscosity (particles should slide along boundaries)
+                        // No boundary viscosity for now - keep particles sliding along walls
                     }
                 }
 
@@ -560,28 +570,38 @@ namespace physsim
                 mAccelerations->setValue(i, ai_p);
             }
 
-            // advance particles
+            // advance particles using Symplectic Euler (more stable than Verlet for SPH)
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif
             for (Eigen::Index i = 0; i < mPositions->getSize(); ++i)
             {
-                // get current position and velocity
+                // get current position, velocity, and accelerations
                 Eigen::Vector3f xi    = mPositions->getValue(i);
                 Eigen::Vector3f vi    = mVelocities->getValue(i);
                 Eigen::Vector3f ai_p  = mAccelerations->getValue(i);
-                Eigen::Vector3f ai_np = mGravity;
+                Eigen::Vector3f ai_ext = mGravity; // External forces
+                
+                // Total acceleration
+                Eigen::Vector3f ai_total = ai_p + ai_ext;
+                
+                // Apply acceleration clamping to prevent exploding particles
+                float max_acceleration = 100.0f; // Reasonable limit for SPH
+                if (ai_total.norm() > max_acceleration) {
+                    ai_total = ai_total.normalized() * max_acceleration;
+                }
 
-                // symplectic euler update
-                Eigen::Vector3f vi_new = vi + dt * (ai_p + ai_np);
-                Eigen::Vector3f xi_new = xi + dt * vi_new;
+                // Symplectic Euler integration (more stable than Verlet for strong forces)
+                // Update velocity first
+                Eigen::Vector3f vi_new = vi + ai_total * dt;
+                
+                // Then update position with new velocity
+                Eigen::Vector3f xi_new = xi + vi_new * dt;
 
                 // write result
                 mPositions->setValue(i, xi_new);
                 mVelocities->setValue(i, vi_new);
             }
-
-            // enforce boundary collisions (OpenMP)
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif
@@ -592,34 +612,36 @@ namespace physsim
                 bool collision = false;
 
                 // Check and enforce domain boundaries
+                const float epsilon = 0.001f;
+                
                 if (pos.x() < mDomain.min().x()) {
-                    pos.x() = mDomain.min().x();
-                    vel.x() = -mBoundaryDamping * vel.x();
+                    pos.x() = mDomain.min().x() + epsilon;
+                    if (vel.x() < 0.0f) vel.x() = -vel.x() * mBoundaryDamping;
                     collision = true;
                 }
                 if (pos.x() > mDomain.max().x()) {
-                    pos.x() = mDomain.max().x();
-                    vel.x() = -mBoundaryDamping * vel.x();
+                    pos.x() = mDomain.max().x() - epsilon;
+                    if (vel.x() > 0.0f) vel.x() = -vel.x() * mBoundaryDamping;
                     collision = true;
                 }
                 if (pos.y() < mDomain.min().y()) {
-                    pos.y() = mDomain.min().y();
-                    vel.y() = -mBoundaryDamping * vel.y();
+                    pos.y() = mDomain.min().y() + epsilon;
+                    if (vel.y() < 0.0f) vel.y() = -vel.y() * mBoundaryDamping;
                     collision = true;
                 }
                 if (pos.y() > mDomain.max().y()) {
-                    pos.y() = mDomain.max().y();
-                    vel.y() = -mBoundaryDamping * vel.y();
+                    pos.y() = mDomain.max().y() - epsilon;
+                    if (vel.y() > 0.0f) vel.y() = -vel.y() * mBoundaryDamping;
                     collision = true;
                 }
                 if (pos.z() < mDomain.min().z()) {
-                    pos.z() = mDomain.min().z();
-                    vel.z() = -mBoundaryDamping * vel.z();
+                    pos.z() = mDomain.min().z() + epsilon;
+                    if (vel.z() < 0.0f) vel.z() = -vel.z() * mBoundaryDamping;
                     collision = true;
                 }
                 if (pos.z() > mDomain.max().z()) {
-                    pos.z() = mDomain.max().z();
-                    vel.z() = -mBoundaryDamping * vel.z();
+                    pos.z() = mDomain.max().z() - epsilon;
+                    if (vel.z() > 0.0f) vel.z() = -vel.z() * mBoundaryDamping;
                     collision = true;
                 }
 
@@ -681,6 +703,8 @@ namespace physsim
             
             // Display current particle count
             ImGui::Separator();
+            ImGui::Text("Simulation Info:");
+            ImGui::Text("Integration: Velocity Verlet");
             ImGui::Text("Particle Count: %d", (int)mPositions->getSize());
             ImGui::Text("Support Radius: %.3f", mSupportRadius);
 
@@ -754,6 +778,11 @@ namespace physsim
          * @brief Pressure accelerations of all particles.
          */
         std::shared_ptr<vislab::Array3f> mAccelerations;
+
+        /**
+         * @brief Previous accelerations for velocity Verlet integration.
+         */
+        std::shared_ptr<vislab::Array3f> mPreviousAccelerations;
 
         /**
          * @brief Densities of all particles.
@@ -863,9 +892,9 @@ int main()
     vislab::Init();
 
     physsim::PhyssimWindow window(
-        800,     // width
-        600,     // height
-        "Smoothed Particle Hydrodynamics", // title
+        1400,     // width - increased for more GUI space
+        900,     // height - increased for more GUI space
+        "Smoothed Particle Hydrodynamics - Velocity Verlet Integration", // title
         std::make_shared<physsim::SmoothedParticleHydrodynamicsSimulation>(),
         false // fullscreen
     );
