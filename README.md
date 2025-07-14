@@ -23,6 +23,8 @@ This project demonstrates advanced parallel computing techniques by implementing
 - 📊 **Performance Analysis**: Frame time tracking and speedup calculations
 - 🏗️ **Modern C++**: C++17 features with professional code architecture
 - 🔧 **Cross-platform**: CMake-based build system with automatic dependency management
+- ⚖️ **Unified Physics**: Identical mathematical formulations ensure fair performance comparison
+- 🎯 **Stability Features**: Advanced clamping and damping for robust simulation
 
 ## 🏆 Performance Results
 
@@ -40,12 +42,13 @@ This project demonstrates advanced parallel computing techniques by implementing
 ## 🛠️ Technical Implementation
 
 ### SPH Physics Engine
-- **Kernel Functions**: Cubic spline kernels for smooth particle interactions
-- **Density Estimation**: Weighted particle mass contributions
-- **Pressure Forces**: Tait equation of state implementation
-- **Viscosity Forces**: Symmetric viscosity formulation
-- **Boundary Conditions**: Akinci boundary handling for realistic fluid-solid interaction
-- **Time Integration**: Stable explicit integration with adaptive timesteps
+- **Kernel Functions**: Cubic spline kernels with unified OpenMP/CUDA implementation
+- **Density Estimation**: Weighted particle mass contributions with boundary handling
+- **Pressure Forces**: Tait equation of state with stability clamping
+- **Viscosity Forces**: Standard SPH viscosity formulation
+- **Boundary Conditions**: Akinci boundary handling with collision detection and damping
+- **Time Integration**: Symplectic Euler integration for improved stability
+- **Force Clamping**: Acceleration limiting to prevent particle explosion
 
 ### Parallel Computing Architecture
 ```
@@ -123,9 +126,11 @@ cmake .. \
 
 ### Runtime Controls
 - **Simulation Mode**: Toggle between OpenMP, CUDA, or comparison mode
-- **Particle Count**: Adjust number of particles (100-10000+)
-- **Physics Parameters**: Modify density, viscosity, pressure, and gravity
-- **Visualization**: Real-time particle rendering with density-based coloring
+- **Physics Parameters**: Real-time adjustment of stiffness, viscosity, exponent, and damping
+- **Time Step Control**: Dynamic time step modification for stability vs performance
+- **Boundary Settings**: Adjustable domain damping and collision parameters
+- **Visualization**: Real-time particle rendering with pressure-based coloring
+- **Performance Monitoring**: Live frame time and speedup statistics
 
 ## 🎯 Usage Examples
 
@@ -152,13 +157,12 @@ auto results = sim.getPerformanceResults();
 SmoothedParticleHydrodynamics_usingCUDA/
 ├── src/
 │   ├── SPH/
-│   │   ├── main.cpp                 # Main application entry point
-│   │   ├── cuda_sph_simulation.hpp  # CUDA simulation wrapper
-│   │   ├── cuda_sph_simulation.cpp  # CUDA implementation
-│   │   ├── sph_cuda.cuh            # CUDA kernel declarations
-│   │   ├── sph_cuda.cu             # CUDA kernel implementations
+│   │   ├── main.cpp                 # Main application and OpenMP simulation
+│   │   ├── cuda_sph_simulation.hpp  # CUDA simulation interface
+│   │   ├── cuda_sph_simulation.cpp  # CUDA memory management and orchestration
+│   │   ├── sph_kernels.cu          # CUDA kernel implementations
 │   │   └── CMakeLists.txt          # SPH build configuration
-│   └── common/                     # Shared utilities and UI
+│   └── common/                     # Shared utilities and UI framework
 ├── vislab/                         # Graphics and visualization framework
 ├── CMakeLists.txt                  # Main build configuration
 ├── CUDA_Performance_Guide.md       # Detailed performance analysis
@@ -182,17 +186,24 @@ SPH is a computational method for simulating fluid dynamics by discretizing flui
 
 ## 🚀 Performance Optimizations
 
+### Recent Improvements
+- **Unified Kernel Implementation**: Fixed mathematical inconsistencies between OpenMP and CUDA
+- **Stability Enhancements**: Added pressure/density clamping and acceleration limiting
+- **Mass Calculation**: Unified mass distribution for fair performance comparison
+- **Integration Method**: Symplectic Euler for improved numerical stability
+- **Boundary Handling**: Enhanced collision detection with proper velocity reflection
+
 ### CPU Optimizations (OpenMP)
 - **Thread-local Storage**: Minimize false sharing
 - **Cache Optimization**: Structure-of-Arrays layout
 - **Load Balancing**: Dynamic work distribution
-- **Vectorization**: SIMD instruction utilization
+- **Spatial Data Structures**: Efficient nearest neighbor search
 
 ### GPU Optimizations (CUDA)
 - **Memory Coalescing**: Optimal memory access patterns
-- **Shared Memory**: Fast on-chip memory utilization
-- **Occupancy Tuning**: Maximize GPU utilization
-- **Kernel Fusion**: Reduce memory bandwidth requirements
+- **Kernel Synchronization**: Proper device synchronization
+- **Block Size Tuning**: 256 threads per block for optimal occupancy
+- **Unified Memory Management**: Efficient host-device data transfer
 
 ## 🎓 Educational Value
 
