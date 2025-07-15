@@ -206,11 +206,17 @@ __global__ void compute_forces_kernel(
             ay -= pressure_factor * grad_y;
             az -= pressure_factor * grad_z;
             
-            // Viscosity acceleration (standard SPH): ai = μ * Σj * (mj/ρj) * (vj - vi) * W(rij)
-            float viscosity_factor = viscosity * massj / rhoj * cubic_kernel(r, support_radius);
-            ax += viscosity_factor * (vxj - vxi);
-            ay += viscosity_factor * (vyj - vyi);
-            az += viscosity_factor * (vzj - vzi);
+            // Viscosity acceleration (Akinci style): ai = μ * Σj * mj * (xij · vij) / (ρj * |xij|²) * ∇Wij
+            float vij_x = vxi - vxj;
+            float vij_y = vyi - vyj;
+            float vij_z = vzi - vzj;
+            float dot_product = dx * vij_x + dy * vij_y + dz * vij_z;
+            float xij_norm_sq = dx * dx + dy * dy + dz * dz;
+            float eta = 0.01f * support_radius * support_radius; // small epsilon to avoid division by zero
+            float Pi_ij = viscosity * dot_product / rhoj / (xij_norm_sq + eta);
+            ax += massj * Pi_ij * grad_x;
+            ay += massj * Pi_ij * grad_y;
+            az += massj * Pi_ij * grad_z;
         }
     }
     
@@ -237,7 +243,18 @@ __global__ void compute_forces_kernel(
             ay -= pressure_factor * grad_y;
             az -= pressure_factor * grad_z;
             
-            // No boundary viscosity for now - keep particles sliding along walls
+            // Akinci boundary viscosity acceleration: ai = μ * Σk * mk * (xik · vik) / (ρ0 * |xik|²) * ∇Wik
+            // boundary velocity is zero, so vik = vi - 0 = vi
+            float vik_x = vxi;
+            float vik_y = vyi;
+            float vik_z = vzi;
+            float dot_product = dx * vik_x + dy * vik_y + dz * vik_z;
+            float xik_norm_sq = dx * dx + dy * dy + dz * dz;
+            float eta = 0.01f * support_radius * support_radius; // small epsilon to avoid division by zero
+            float Pi_ik = viscosity * dot_product / rest_density / (xik_norm_sq + eta);
+            ax += massk * Pi_ik * grad_x;
+            ay += massk * Pi_ik * grad_y;
+            az += massk * Pi_ik * grad_z;
         }
     }
     
