@@ -124,6 +124,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/attributes.cpp.o: /home/cip/c
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/c++/12/bits/std_abs.h \
   /usr/include/c++/12/string_view \
@@ -206,6 +207,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/attributes.cpp.o: /home/cip/c
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio.h \
   /usr/include/c++/12/cerrno \
   /usr/include/errno.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
@@ -678,6 +680,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/face_normals.cpp.o: /home/cip
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/c++/12/bits/specfun.h \
   /usr/include/c++/12/bits/stl_algobase.h \
@@ -796,6 +799,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/face_normals.cpp.o: /home/cip
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio.h \
   /usr/include/c++/12/cerrno \
   /usr/include/errno.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
@@ -1367,6 +1371,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/iline.cpp.o: /home/cip/ce/yl3
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/c++/12/bits/std_abs.h \
   /usr/include/c++/12/string_view \
@@ -1449,6 +1454,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/iline.cpp.o: /home/cip/ce/yl3
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio.h \
   /usr/include/c++/12/cerrno \
   /usr/include/errno.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
@@ -1967,6 +1973,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/ilines.cpp.o: /home/cip/ce/yl
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/c++/12/bits/std_abs.h \
   /usr/include/c++/12/string_view \
@@ -2049,6 +2056,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/ilines.cpp.o: /home/cip/ce/yl
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio.h \
   /usr/include/c++/12/cerrno \
   /usr/include/errno.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
@@ -2182,6 +2190,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/init_geometry.cpp.o: /home/ci
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/c++/12/bits/std_abs.h \
   /usr/include/c++/12/string_view \
@@ -2264,6 +2273,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/init_geometry.cpp.o: /home/ci
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio.h \
   /usr/include/c++/12/cerrno \
   /usr/include/errno.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
@@ -2848,6 +2858,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/ipoints.cpp.o: /home/cip/ce/y
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/c++/12/bits/std_abs.h \
   /usr/include/c++/12/string_view \
@@ -2930,6 +2941,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/ipoints.cpp.o: /home/cip/ce/y
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio.h \
   /usr/include/c++/12/cerrno \
   /usr/include/errno.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
@@ -3447,6 +3459,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/isurface.cpp.o: /home/cip/ce/
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/c++/12/bits/std_abs.h \
   /usr/include/c++/12/string_view \
@@ -3529,6 +3542,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/isurface.cpp.o: /home/cip/ce/
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio.h \
   /usr/include/c++/12/cerrno \
   /usr/include/errno.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
@@ -4047,6 +4061,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/isurfaces.cpp.o: /home/cip/ce
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/c++/12/bits/std_abs.h \
   /usr/include/c++/12/string_view \
@@ -4129,6 +4144,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/isurfaces.cpp.o: /home/cip/ce
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio.h \
   /usr/include/c++/12/cerrno \
   /usr/include/errno.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
@@ -4221,6 +4237,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/vertex_normals.cpp.o: /home/c
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/c++/12/bits/specfun.h \
   /usr/include/c++/12/bits/stl_algobase.h \
@@ -4339,6 +4356,7 @@ vislab/geometry/CMakeFiles/vislab_geometry.dir/src/vertex_normals.cpp.o: /home/c
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio.h \
   /usr/include/c++/12/cerrno \
   /usr/include/errno.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
@@ -4916,7 +4934,9 @@ _deps/eigen3-src/Eigen/src/SparseLU/SparseLU_pruneL.h:
 
 _deps/eigen3-src/Eigen/src/SparseLU/SparseLU_copy_to_ucol.h:
 
-/usr/include/c++/12/sstream:
+_deps/eigen3-src/Eigen/src/SparseLU/SparseLU_panel_bmod.h:
+
+_deps/eigen3-src/Eigen/src/SparseLU/SparseLU_kernel_bmod.h:
 
 /usr/include/c++/12/complex:
 
@@ -5156,6 +5176,12 @@ _deps/eigen3-src/Eigen/src/plugins/ArrayCwiseBinaryOps.h:
 
 _deps/eigen3-src/Eigen/src/SparseCore/ConservativeSparseSparseProduct.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/12/include/mmintrin.h:
+
+/usr/include/c++/12/iosfwd:
+
+_deps/eigen3-src/Eigen/src/Core/Transpositions.h:
+
 /usr/include/stdio.h:
 
 /usr/include/asm-generic/errno-base.h:
@@ -5328,10 +5354,6 @@ _deps/eigen3-src/Eigen/src/Core/util/ReshapedHelper.h:
 
 /usr/include/c++/12/bits/stl_iterator.h:
 
-/usr/include/c++/12/iosfwd:
-
-_deps/eigen3-src/Eigen/src/Core/Transpositions.h:
-
 /usr/include/c++/12/bits/utility.h:
 
 /usr/include/c++/12/bits/invoke.h:
@@ -5472,6 +5494,8 @@ _deps/eigen3-src/Eigen/src/Core/NestByValue.h:
 
 /usr/include/c++/12/bits/erase_if.h:
 
+/usr/include/x86_64-linux-gnu/bits/stdio.h:
+
 /usr/lib/gcc/x86_64-linux-gnu/12/include/stdarg.h:
 
 /usr/include/string.h:
@@ -5540,8 +5564,6 @@ _deps/eigen3-src/Eigen/src/LU/InverseImpl.h:
 
 _deps/eigen3-src/Eigen/src/Core/products/TriangularMatrixVector.h:
 
-/usr/include/c++/12/istream:
-
 _deps/eigen3-src/Eigen/src/Geometry/ParametrizedLine.h:
 
 /usr/include/c++/12/cctype:
@@ -5554,7 +5576,9 @@ _deps/eigen3-src/Eigen/src/Geometry/ParametrizedLine.h:
 
 /usr/include/c++/12/bits/locale_facets.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/12/include/mmintrin.h:
+/usr/include/c++/12/sstream:
+
+/usr/include/c++/12/istream:
 
 /usr/include/c++/12/ios:
 
@@ -5664,9 +5688,9 @@ _deps/eigen3-src/Eigen/src/Core/arch/SSE/TypeCasting.h:
 
 _deps/eigen3-src/Eigen/SVD:
 
-/usr/include/c++/12/bits/basic_ios.h:
-
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
+
+/usr/include/c++/12/bits/basic_ios.h:
 
 _deps/eigen3-src/Eigen/src/Eigenvalues/EigenSolver.h:
 
@@ -5932,6 +5956,8 @@ _deps/eigen3-src/Eigen/src/Geometry/Transform.h:
 
 _deps/eigen3-src/Eigen/src/Geometry/Translation.h:
 
+/usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h:
+
 /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
 
 _deps/eigen3-src/Eigen/Geometry:
@@ -6079,7 +6105,3 @@ _deps/eigen3-src/Eigen/src/SparseLU/SparseLU_Memory.h:
 _deps/eigen3-src/Eigen/src/SparseLU/SparseLU_relax_snode.h:
 
 _deps/eigen3-src/Eigen/src/SparseLU/SparseLU_panel_dfs.h:
-
-_deps/eigen3-src/Eigen/src/SparseLU/SparseLU_kernel_bmod.h:
-
-_deps/eigen3-src/Eigen/src/SparseLU/SparseLU_panel_bmod.h:

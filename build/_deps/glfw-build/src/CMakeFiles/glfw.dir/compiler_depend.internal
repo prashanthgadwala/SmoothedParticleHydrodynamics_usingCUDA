@@ -52,6 +52,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/context.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -244,6 +245,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/egl_context.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -381,6 +383,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/egl_context.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/assert.h
 
@@ -435,6 +438,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/glx_context.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -572,6 +576,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/glx_context.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/assert.h
 
@@ -626,6 +631,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/init.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -763,6 +769,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/init.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/assert.h
 
@@ -817,6 +824,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/input.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -955,6 +963,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/input.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/string.h
  /usr/include/strings.h
@@ -1010,6 +1019,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/linux_joystick.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -1164,6 +1174,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/linux_joystick.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/string.h
  /usr/include/strings.h
@@ -1219,6 +1230,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/monitor.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -1358,6 +1370,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/monitor.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/lib/gcc/x86_64-linux-gnu/12/include/limits.h
  /usr/lib/gcc/x86_64-linux-gnu/12/include/syslimits.h
@@ -1417,6 +1430,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/null_init.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -1552,6 +1566,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/null_init.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/string.h
  /usr/include/strings.h
@@ -1607,6 +1622,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/null_joystick.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -1790,6 +1806,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/null_monitor.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -1925,6 +1942,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/null_monitor.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/string.h
  /usr/include/strings.h
@@ -1980,6 +1998,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/null_window.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -2115,6 +2134,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/null_window.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/string.h
  /usr/include/strings.h
@@ -2170,6 +2190,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/osmesa_context.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -2305,6 +2326,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/osmesa_context.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/string.h
  /usr/include/strings.h
@@ -2361,6 +2383,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/platform.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -2498,6 +2521,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/platform.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
 
 _deps/glfw-build/src/CMakeFiles/glfw.dir/posix_module.c.o
@@ -2551,6 +2575,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/posix_module.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -2739,6 +2764,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/posix_poll.c.o
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -2931,6 +2957,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/posix_thread.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -3117,6 +3144,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/posix_time.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -3300,6 +3328,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/vulkan.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -3438,6 +3467,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/vulkan.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
 
 _deps/glfw-build/src/CMakeFiles/glfw.dir/window.c.o
@@ -3491,6 +3521,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/window.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -3629,6 +3660,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/window.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/lib/gcc/x86_64-linux-gnu/12/include/float.h
 
@@ -3683,6 +3715,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/wl_init.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -3830,6 +3863,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/wl_init.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/string.h
  /usr/include/strings.h
@@ -3916,6 +3950,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/wl_monitor.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -4051,6 +4086,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/wl_monitor.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/string.h
  /usr/include/strings.h
@@ -4120,6 +4156,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/wl_window.c.o
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -4257,6 +4294,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/wl_window.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/errno.h
  /usr/include/x86_64-linux-gnu/bits/errno.h
@@ -4348,6 +4386,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/x11_init.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -4483,6 +4522,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/x11_init.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/string.h
  /usr/include/strings.h
@@ -4558,6 +4598,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/x11_monitor.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -4699,6 +4740,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/x11_monitor.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/include/string.h
  /usr/include/strings.h
@@ -4755,6 +4797,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/x11_window.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h
@@ -4894,6 +4937,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/x11_window.c.o
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/alloca.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
  /usr/lib/gcc/x86_64-linux-gnu/12/include/limits.h
  /usr/lib/gcc/x86_64-linux-gnu/12/include/syslimits.h
@@ -4960,6 +5004,7 @@ _deps/glfw-build/src/CMakeFiles/glfw.dir/xkb_unicode.c.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+ /usr/include/x86_64-linux-gnu/bits/stdio.h
  /usr/include/xkbcommon/xkbcommon-names.h
  /usr/include/xkbcommon/xkbcommon-keysyms.h
  /usr/include/xkbcommon/xkbcommon-compat.h

@@ -6,5 +6,5 @@ CXX_DEFINES = -DEIGEN_MATRIXBASE_PLUGIN=\"/home/cip/ce/yl34esew/Documents/Smooth
 
 CXX_INCLUDES = -I/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/graphics/test/generated -I/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/vislab/graphics/include -I/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/vislab/geometry/include -I/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/vislab/core/include -I/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/eigen3-src -I/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/meta-src/src -I/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/vislab/field/include -isystem /home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/googletest-src/googletest/include -isystem /home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/googletest-src/googletest
 
-CXX_FLAGS = -fopenmp -std=gnu++17
+CXX_FLAGS = -O3 -DNDEBUG -fopenmp -std=gnu++17
 
