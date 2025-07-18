@@ -3,9 +3,9 @@
 # No other meaning or use of this file is supported.
 
 method=url
-command=/usr/bin/cmake;-P;/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/download-imgui-populate.cmake;COMMAND;/usr/bin/cmake;-P;/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/verify-imgui-populate.cmake;COMMAND;/usr/bin/cmake;-P;/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/extract-imgui-populate.cmake
-source_dir=/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-src
-work_dir=/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps
+command=/usr/bin/cmake;-P;/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/download-imgui-populate.cmake;COMMAND;/usr/bin/cmake;-P;/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/verify-imgui-populate.cmake;COMMAND;/usr/bin/cmake;-P;/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/extract-imgui-populate.cmake
+source_dir=/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-src
+work_dir=/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps
 url(s)=https://github.com/ocornut/imgui/archive/docking.zip
 hash=
 no_extract=

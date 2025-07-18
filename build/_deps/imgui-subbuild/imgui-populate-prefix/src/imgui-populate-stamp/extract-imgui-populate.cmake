@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 3.5)
 
 # Make file names absolute:
 #
-get_filename_component(filename "/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-subbuild/imgui-populate-prefix/src/docking.zip" ABSOLUTE)
-get_filename_component(directory "/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-src" ABSOLUTE)
+get_filename_component(filename "/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-subbuild/imgui-populate-prefix/src/docking.zip" ABSOLUTE)
+get_filename_component(directory "/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/imgui-src" ABSOLUTE)
 
 message(STATUS "extracting...
      src='${filename}'

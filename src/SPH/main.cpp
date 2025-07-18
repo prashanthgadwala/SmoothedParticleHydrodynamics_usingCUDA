@@ -24,6 +24,8 @@
 #include <random>
 #include <iostream>
 #include <chrono>
+#include <fstream>
+#include <filesystem> 
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -50,6 +52,69 @@ namespace physsim
         
     private:
         std::chrono::high_resolution_clock::time_point start_time;
+    };
+
+    /**
+     * @brief perfomance analyzer class to record and analyze simulation performance
+     */
+
+    class PerformanceAnalyzer {
+    public:
+        struct FrameData {
+            int frame;
+            int particle_count;
+            double openmp_time;
+            double cuda_time;
+            double speedup;
+            double density_time;
+            double pressure_time;
+            double force_time;
+            double integration_time;
+        };
+        
+        std::vector<FrameData> frame_data;
+        
+        void recordFrame(int frame, int particles, double omp_time, double cuda_time) {
+            FrameData data;
+            data.frame = frame;
+            data.particle_count = particles;
+            data.openmp_time = omp_time;
+            data.cuda_time = cuda_time;
+            data.speedup = omp_time / cuda_time;
+            frame_data.push_back(data);
+        }
+        
+        void exportToCSV(const std::string& filename) {
+            std::ofstream file(filename);
+            file << "Frame,Particles,OpenMP_ms,CUDA_ms,Speedup\n";
+            for (const auto& data : frame_data) {
+                file << data.frame << "," << data.particle_count << "," 
+                     << data.openmp_time << "," << data.cuda_time << "," 
+                     << data.speedup << "\n";
+            }
+        }
+        
+        void exportToVTK(const std::string& filename) {
+            std::ofstream file(filename);
+            file << "# vtk DataFile Version 3.0\n";
+            file << "SPH Performance Data\n";
+            file << "ASCII\n";
+            file << "DATASET UNSTRUCTURED_GRID\n";
+            file << "POINTS " << frame_data.size() << " float\n";
+            
+            for (size_t i = 0; i < frame_data.size(); ++i) {
+                file << frame_data[i].frame << " " << frame_data[i].openmp_time << " " 
+                     << frame_data[i].cuda_time << "\n";
+            }
+            
+            file << "POINT_DATA " << frame_data.size() << "\n";
+            file << "SCALARS Speedup float 1\n";
+            file << "LOOKUP_TABLE default\n";
+            for (const auto& data : frame_data) {
+                file << data.speedup << "\n";
+            }
+        }
+
     };
 
     /**
@@ -190,13 +255,13 @@ namespace physsim
             // create ground plane
             auto rectActor = std::make_shared<Actor>("ground");
             rectActor->components.add(std::make_shared<RectangleGeometry>());
-            rectActor->components.add(std::make_shared<DiffuseBSDF>(std::make_shared<ConstTexture>(Spectrum(1, 1, 1))));
+            rectActor->components.add(std::make_shared<DiffuseBSDF>(std::make_shared<ConstTexture>(Spectrum(0.2f, 0.6f, 0.2f)))); // Grass green
             rectActor->components.add(std::make_shared<Transform>(Eigen::Vector3d::Zero(), Eigen::Quaterniond::Identity(), Eigen::Vector3d(10., 5., 1.)));
 
-            // create a point light
+            // create a point light - positioned like sun for optimal visibility
             auto lightActor = std::make_shared<Actor>("light");
-            lightActor->components.add(std::make_shared<PointLight>(Spectrum(500.0, 500.0, 500.0)));
-            lightActor->components.add(std::make_shared<Transform>(Eigen::Vector3d(5, 20, 10)));
+            lightActor->components.add(std::make_shared<PointLight>(Spectrum(800.0, 750.0, 650.0))); // Warm sunlight
+            lightActor->components.add(std::make_shared<Transform>(Eigen::Vector3d(-3, 15, 12))); // Positioned to illuminate particles from above-left
 
             // create a camera
             auto cameraActor = std::make_shared<Actor>("camera");
@@ -217,11 +282,12 @@ namespace physsim
             colormapTexture->transferFunction.minValue = 0;
             colormapTexture->transferFunction.maxValue = 100000;
             colormapTexture->transferFunction.values.clear();
-            colormapTexture->transferFunction.values.insert(std::make_pair(0., Eigen::Vector4d(103 / 255., 169 / 255., 207 / 255., 1)));
-            colormapTexture->transferFunction.values.insert(std::make_pair(0.25, Eigen::Vector4d(209 / 255., 229 / 255., 240 / 255., 1)));
-            colormapTexture->transferFunction.values.insert(std::make_pair(0.5, Eigen::Vector4d(247 / 255., 247 / 255., 247 / 255., 1)));
-            colormapTexture->transferFunction.values.insert(std::make_pair(0.75, Eigen::Vector4d(253 / 255., 219 / 255., 199 / 255., 1)));
-            colormapTexture->transferFunction.values.insert(std::make_pair(1., Eigen::Vector4d(239 / 255., 138 / 255., 98 / 255., 1)));
+            // Ocean-like blue colors based on pressure
+            colormapTexture->transferFunction.values.insert(std::make_pair(0., Eigen::Vector4d(0.0f, 0.4f, 0.8f, 1))); // Deep ocean blue
+            colormapTexture->transferFunction.values.insert(std::make_pair(0.25, Eigen::Vector4d(0.1f, 0.5f, 0.9f, 1))); // Ocean blue
+            colormapTexture->transferFunction.values.insert(std::make_pair(0.5, Eigen::Vector4d(0.2f, 0.6f, 1.0f, 1))); // Light ocean blue
+            colormapTexture->transferFunction.values.insert(std::make_pair(0.75, Eigen::Vector4d(0.4f, 0.8f, 1.0f, 1))); // Foam blue
+            colormapTexture->transferFunction.values.insert(std::make_pair(1., Eigen::Vector4d(0.8f, 0.95f, 1.0f, 1))); // White foam (high pressure)
             mSpheres->components.add(std::make_shared<DiffuseBSDF>(colormapTexture));
             mSpheres->components.add(std::make_shared<Transform>(Eigen::Vector3d(0, 0, 0)));
 
@@ -416,11 +482,30 @@ namespace physsim
                     double avgCudaTime = mCudaTotalTime / mTotalFrames;
                     double speedup = avgOpenMPTime / avgCudaTime;
                     
+                    // Record data for analysis
+                    mPerformanceAnalyzer.recordFrame(mTotalFrames, mPositions->getSize(), 
+                                                   avgOpenMPTime, avgCudaTime);
+                    
                     std::cout << "Performance comparison (Frame " << mTotalFrames << "):" << std::endl;
                     std::cout << "  OpenMP average: " << avgOpenMPTime << " ms" << std::endl;
                     std::cout << "  CUDA average: " << avgCudaTime << " ms" << std::endl;
                     std::cout << "  CUDA speedup: " << speedup << "x" << std::endl;
                     std::cout << "  Particles: " << mPositions->getSize() << std::endl << std::endl;
+                    
+                    // Export performance data to CSV and VTK every 500 frames
+                    if (mTotalFrames % 100 == 0) {
+                        // Create output folder path
+                        std::string output_folder = "output";
+                        std::filesystem::create_directories(output_folder);
+                        
+                        mPerformanceAnalyzer.exportToCSV(output_folder + "/sph_performance_" + std::to_string(mTotalFrames) + ".csv");
+                        mPerformanceAnalyzer.exportToVTK(output_folder + "/sph_performance_" + std::to_string(mTotalFrames) + ".vtk");
+                        
+                        std::cout << "=== FILES EXPORTED ===" << std::endl;
+                        std::cout << "CSV: " << output_folder << "sph_performance_" << mTotalFrames << ".csv" << std::endl;
+                        std::cout << "VTK: " << output_folder << "sph_performance_" << mTotalFrames << ".vtk" << std::endl;
+                        std::cout << "======================" << std::endl;
+                    }
                 }
                 
             } else if (mUseCuda && mCudaSimulation && mPositions->getSize() > 0) {
@@ -714,7 +799,7 @@ namespace physsim
             // Display current particle count
             ImGui::Separator();
             ImGui::Text("Simulation Info:");
-            ImGui::Text("Integration: Velocity Verlet");
+            ImGui::Text("Integration: Sympletic Euler");
             ImGui::Text("Particle Count: %d", (int)mPositions->getSize());
             ImGui::Text("Support Radius: %.3f", mSupportRadius);
 
@@ -894,12 +979,16 @@ namespace physsim
         int mTotalFrames;
         double mOpenMPTotalTime;
         double mCudaTotalTime;
+
+        PerformanceAnalyzer mPerformanceAnalyzer;
     };
+
 }
 
 int main()
 {
     vislab::Init();
+    glClearColor(0.9f, 0.9f, 0.95f, 1.0f); // Light greyish-blue
 
     physsim::PhyssimWindow window(
         1400,     // width - increased for more GUI space

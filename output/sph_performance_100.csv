@@ -1,0 +1,2 @@
+Frame,Particles,OpenMP_ms,CUDA_ms,Speedup
+100,864,21.4596,10.2238,2.09899

@@ -22,8 +22,8 @@ set_property(GLOBAL PROPERTY _CMAKE_FindGit_GIT_EXECUTABLE_VERSION
 include(ExternalProject)
 ExternalProject_Add(glfw-populate
                      "UPDATE_DISCONNECTED" "False" "GIT_REPOSITORY" "https://github.com/glfw/glfw.git" "GIT_TAG" "origin/master"
-                    SOURCE_DIR          "/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/glfw-src"
-                    BINARY_DIR          "/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/glfw-build"
+                    SOURCE_DIR          "/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/glfw-src"
+                    BINARY_DIR          "/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/glfw-build"
                     CONFIGURE_COMMAND   ""
                     BUILD_COMMAND       ""
                     INSTALL_COMMAND     ""

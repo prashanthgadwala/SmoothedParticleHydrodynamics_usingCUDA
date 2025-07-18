@@ -1,4 +1,4 @@
-# Install script for directory: /home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/vislab/graphics
+# Install script for directory: /home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/vislab/graphics
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,6 +44,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/graphics/test/cmake_install.cmake")
+  include("/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/graphics/test/cmake_install.cmake")
 endif()
 

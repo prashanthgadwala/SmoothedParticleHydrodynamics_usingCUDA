@@ -1,4 +1,4 @@
-# Install script for directory: /home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/vislab/field/test
+# Install script for directory: /home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/vislab/field/test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

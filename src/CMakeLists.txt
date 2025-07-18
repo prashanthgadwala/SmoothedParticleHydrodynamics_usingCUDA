@@ -1,2 +1,2 @@
-add_subdirectory(SPH)
 add_subdirectory(common)
+add_subdirectory(SPH)

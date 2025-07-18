@@ -1,4 +1,4 @@
-# Install script for directory: /home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/vislab
+# Install script for directory: /home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/vislab
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,26 +44,26 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/core/cmake_install.cmake")
+  include("/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/core/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/field/cmake_install.cmake")
+  include("/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/field/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/geometry/cmake_install.cmake")
+  include("/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/geometry/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/graphics/cmake_install.cmake")
+  include("/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/graphics/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/opengl/cmake_install.cmake")
+  include("/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/vislab/opengl/cmake_install.cmake")
 endif()
 

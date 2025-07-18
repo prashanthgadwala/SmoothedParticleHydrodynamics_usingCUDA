@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -DGLEW_BUILD -DGLEW_NO_GLU -Dlibglew_shared_EXPORTS
 
-C_INCLUDES = -I/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/glew-src/include
+C_INCLUDES = -I/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/glew-src/include
 
 C_FLAGS = -fPIC
 

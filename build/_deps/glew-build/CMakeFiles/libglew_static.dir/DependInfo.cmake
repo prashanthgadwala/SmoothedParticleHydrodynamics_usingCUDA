@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/cip/ce/yl34esew/Documents/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/glew-src/src/glew.c" "_deps/glew-build/CMakeFiles/libglew_static.dir/src/glew.c.o" "gcc" "_deps/glew-build/CMakeFiles/libglew_static.dir/src/glew.c.o.d"
+  "/home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build/_deps/glew-src/src/glew.c" "_deps/glew-build/CMakeFiles/libglew_static.dir/src/glew.c.o" "gcc" "_deps/glew-build/CMakeFiles/libglew_static.dir/src/glew.c.o.d"
   )
 
 # Targets to which this target links.

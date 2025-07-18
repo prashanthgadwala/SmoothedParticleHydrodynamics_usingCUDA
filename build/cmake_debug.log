@@ -1,0 +1,823 @@
+-- DEBUG: vislab_core_test raw dependencies: vislab_core;gtest;gtest_main
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: Processing dependency: gtest
+-- DEBUG: gtest is a target
+-- DEBUG: gtest SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest to filtered_deps
+-- DEBUG: Processing dependency: gtest_main
+-- DEBUG: gtest_main is a target
+-- DEBUG: gtest_main SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest_main to filtered_deps
+-- DEBUG: vislab_core_test filtered dependencies: vislab_core;gtest;gtest_main
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: OpenMP::OpenMP_CXX is a target
+-- DEBUG: OpenMP::OpenMP_CXX SYSTEM property: ON
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (system target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: Recursing into gtest
+-- DEBUG: gtest raw dependencies: Threads::Threads
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: gtest filtered dependencies: 
+-- DEBUG: gtest children: 
+-- DEBUG: Recursing into gtest_main
+-- DEBUG: gtest_main raw dependencies: Threads::Threads;gtest
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: Processing dependency: gtest
+-- DEBUG: gtest is a target
+-- DEBUG: gtest SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest to filtered_deps
+-- DEBUG: gtest_main filtered dependencies: gtest
+-- DEBUG: Recursing into gtest
+-- DEBUG: gtest raw dependencies: Threads::Threads
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: gtest filtered dependencies: 
+-- DEBUG: gtest children: 
+-- DEBUG: gtest_main children: gtest
+-- === DEBUGGING generate_init_function for vislab_core_test ===
+-- LIBS found: vislab_core;gtest;gtest_main;eigen;meta
+-- Processing library: vislab_core
+--   -> Found vislab module: core
+-- Processing library: gtest
+--   -> Not a vislab module: gtest
+-- Processing library: gtest_main
+--   -> Not a vislab module: gtest_main
+-- Processing library: eigen
+--   -> Not a vislab module: eigen
+-- Processing library: meta
+--   -> Not a vislab module: meta
+-- Final include_string: #include "init_core.hpp"
+
+-- Final init_string:                 init_core();
+
+-- === END DEBUGGING ===
+-- DEBUG: vislab_field_test raw dependencies: vislab_field;gtest;gtest_main
+-- DEBUG: Processing dependency: vislab_field
+-- DEBUG: vislab_field is a target
+-- DEBUG: vislab_field SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_field to filtered_deps
+-- DEBUG: Processing dependency: gtest
+-- DEBUG: gtest is a target
+-- DEBUG: gtest SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest to filtered_deps
+-- DEBUG: Processing dependency: gtest_main
+-- DEBUG: gtest_main is a target
+-- DEBUG: gtest_main SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest_main to filtered_deps
+-- DEBUG: vislab_field_test filtered dependencies: vislab_field;gtest;gtest_main
+-- DEBUG: Recursing into vislab_field
+-- DEBUG: vislab_field raw dependencies: vislab_core
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: vislab_field filtered dependencies: vislab_core
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: vislab_field children: vislab_core;eigen;meta
+-- DEBUG: Recursing into gtest
+-- DEBUG: gtest raw dependencies: Threads::Threads
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: gtest filtered dependencies: 
+-- DEBUG: gtest children: 
+-- DEBUG: Recursing into gtest_main
+-- DEBUG: gtest_main raw dependencies: Threads::Threads;gtest
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: Processing dependency: gtest
+-- DEBUG: gtest is a target
+-- DEBUG: gtest SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest to filtered_deps
+-- DEBUG: gtest_main filtered dependencies: gtest
+-- DEBUG: Recursing into gtest
+-- DEBUG: gtest raw dependencies: Threads::Threads
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: gtest filtered dependencies: 
+-- DEBUG: gtest children: 
+-- DEBUG: gtest_main children: gtest
+-- === DEBUGGING generate_init_function for vislab_field_test ===
+-- LIBS found: vislab_field;gtest;gtest_main;vislab_core;eigen;meta
+-- Processing library: vislab_field
+--   -> Found vislab module: field
+-- Processing library: gtest
+--   -> Not a vislab module: gtest
+-- Processing library: gtest_main
+--   -> Not a vislab module: gtest_main
+-- Processing library: vislab_core
+--   -> Found vislab module: core
+-- Processing library: eigen
+--   -> Not a vislab module: eigen
+-- Processing library: meta
+--   -> Not a vislab module: meta
+-- Final include_string: #include "init_field.hpp"
+#include "init_core.hpp"
+
+-- Final init_string:                 init_field();
+                init_core();
+
+-- === END DEBUGGING ===
+-- DEBUG: vislab_geometry_test raw dependencies: vislab_geometry;gtest;gtest_main
+-- DEBUG: Processing dependency: vislab_geometry
+-- DEBUG: vislab_geometry is a target
+-- DEBUG: vislab_geometry SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_geometry to filtered_deps
+-- DEBUG: Processing dependency: gtest
+-- DEBUG: gtest is a target
+-- DEBUG: gtest SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest to filtered_deps
+-- DEBUG: Processing dependency: gtest_main
+-- DEBUG: gtest_main is a target
+-- DEBUG: gtest_main SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest_main to filtered_deps
+-- DEBUG: vislab_geometry_test filtered dependencies: vislab_geometry;gtest;gtest_main
+-- DEBUG: Recursing into vislab_geometry
+-- DEBUG: vislab_geometry raw dependencies: vislab_core
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: vislab_geometry filtered dependencies: vislab_core
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: vislab_geometry children: vislab_core;eigen;meta
+-- DEBUG: Recursing into gtest
+-- DEBUG: gtest raw dependencies: Threads::Threads
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: gtest filtered dependencies: 
+-- DEBUG: gtest children: 
+-- DEBUG: Recursing into gtest_main
+-- DEBUG: gtest_main raw dependencies: Threads::Threads;gtest
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: Processing dependency: gtest
+-- DEBUG: gtest is a target
+-- DEBUG: gtest SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest to filtered_deps
+-- DEBUG: gtest_main filtered dependencies: gtest
+-- DEBUG: Recursing into gtest
+-- DEBUG: gtest raw dependencies: Threads::Threads
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: gtest filtered dependencies: 
+-- DEBUG: gtest children: 
+-- DEBUG: gtest_main children: gtest
+-- === DEBUGGING generate_init_function for vislab_geometry_test ===
+-- LIBS found: vislab_geometry;gtest;gtest_main;vislab_core;eigen;meta
+-- Processing library: vislab_geometry
+--   -> Found vislab module: geometry
+-- Processing library: gtest
+--   -> Not a vislab module: gtest
+-- Processing library: gtest_main
+--   -> Not a vislab module: gtest_main
+-- Processing library: vislab_core
+--   -> Found vislab module: core
+-- Processing library: eigen
+--   -> Not a vislab module: eigen
+-- Processing library: meta
+--   -> Not a vislab module: meta
+-- Final include_string: #include "init_geometry.hpp"
+#include "init_core.hpp"
+
+-- Final init_string:                 init_geometry();
+                init_core();
+
+-- === END DEBUGGING ===
+-- DEBUG: vislab_graphics_test raw dependencies: vislab_graphics;gtest;gtest_main
+-- DEBUG: Processing dependency: vislab_graphics
+-- DEBUG: vislab_graphics is a target
+-- DEBUG: vislab_graphics SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_graphics to filtered_deps
+-- DEBUG: Processing dependency: gtest
+-- DEBUG: gtest is a target
+-- DEBUG: gtest SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest to filtered_deps
+-- DEBUG: Processing dependency: gtest_main
+-- DEBUG: gtest_main is a target
+-- DEBUG: gtest_main SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest_main to filtered_deps
+-- DEBUG: vislab_graphics_test filtered dependencies: vislab_graphics;gtest;gtest_main
+-- DEBUG: Recursing into vislab_graphics
+-- DEBUG: vislab_graphics raw dependencies: vislab_geometry;vislab_field
+-- DEBUG: Processing dependency: vislab_geometry
+-- DEBUG: vislab_geometry is a target
+-- DEBUG: vislab_geometry SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_geometry to filtered_deps
+-- DEBUG: Processing dependency: vislab_field
+-- DEBUG: vislab_field is a target
+-- DEBUG: vislab_field SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_field to filtered_deps
+-- DEBUG: vislab_graphics filtered dependencies: vislab_geometry;vislab_field
+-- DEBUG: Recursing into vislab_geometry
+-- DEBUG: vislab_geometry raw dependencies: vislab_core
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: vislab_geometry filtered dependencies: vislab_core
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: vislab_geometry children: vislab_core;eigen;meta
+-- DEBUG: Recursing into vislab_field
+-- DEBUG: vislab_field raw dependencies: vislab_core
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: vislab_field filtered dependencies: vislab_core
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: vislab_field children: vislab_core;eigen;meta
+-- DEBUG: vislab_graphics children: vislab_geometry;vislab_field;vislab_core;eigen;meta
+-- DEBUG: Recursing into gtest
+-- DEBUG: gtest raw dependencies: Threads::Threads
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: gtest filtered dependencies: 
+-- DEBUG: gtest children: 
+-- DEBUG: Recursing into gtest_main
+-- DEBUG: gtest_main raw dependencies: Threads::Threads;gtest
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: Processing dependency: gtest
+-- DEBUG: gtest is a target
+-- DEBUG: gtest SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding gtest to filtered_deps
+-- DEBUG: gtest_main filtered dependencies: gtest
+-- DEBUG: Recursing into gtest
+-- DEBUG: gtest raw dependencies: Threads::Threads
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: gtest filtered dependencies: 
+-- DEBUG: gtest children: 
+-- DEBUG: gtest_main children: gtest
+-- === DEBUGGING generate_init_function for vislab_graphics_test ===
+-- LIBS found: vislab_graphics;gtest;gtest_main;vislab_geometry;vislab_field;vislab_core;eigen;meta
+-- Processing library: vislab_graphics
+--   -> Found vislab module: graphics
+-- Processing library: gtest
+--   -> Not a vislab module: gtest
+-- Processing library: gtest_main
+--   -> Not a vislab module: gtest_main
+-- Processing library: vislab_geometry
+--   -> Found vislab module: geometry
+-- Processing library: vislab_field
+--   -> Found vislab module: field
+-- Processing library: vislab_core
+--   -> Found vislab module: core
+-- Processing library: eigen
+--   -> Not a vislab module: eigen
+-- Processing library: meta
+--   -> Not a vislab module: meta
+-- Final include_string: #include "init_graphics.hpp"
+#include "init_geometry.hpp"
+#include "init_field.hpp"
+#include "init_core.hpp"
+
+-- Final init_string:                 init_graphics();
+                init_geometry();
+                init_field();
+                init_core();
+
+-- === END DEBUGGING ===
+Try to find OpenGL with GLVND
+-- Including Wayland support
+-- Including X11 support
+-- Documentation generation requires Doxygen 1.9.8 or later
+-- DEBUG: sph_simulation raw dependencies: physsim_common;CUDA::cudart;CUDA::curand
+-- DEBUG: Processing dependency: physsim_common
+-- DEBUG: physsim_common is a target
+-- DEBUG: physsim_common SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding physsim_common to filtered_deps
+-- DEBUG: Processing dependency: CUDA::cudart
+-- DEBUG: CUDA::cudart is a target
+-- DEBUG: CUDA::cudart SYSTEM property: ON
+-- DEBUG: Ignoring CUDA::cudart (system target)
+-- DEBUG: Processing dependency: CUDA::curand
+-- DEBUG: CUDA::curand is a target
+-- DEBUG: CUDA::curand SYSTEM property: ON
+-- DEBUG: Ignoring CUDA::curand (system target)
+-- DEBUG: sph_simulation filtered dependencies: physsim_common
+-- DEBUG: Recursing into physsim_common
+-- DEBUG: physsim_common raw dependencies: vislab_core;vislab_graphics;vislab_geometry;vislab_field;vislab_opengl;imgui;nanoflann
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: Processing dependency: vislab_graphics
+-- DEBUG: vislab_graphics is a target
+-- DEBUG: vislab_graphics SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_graphics to filtered_deps
+-- DEBUG: Processing dependency: vislab_geometry
+-- DEBUG: vislab_geometry is a target
+-- DEBUG: vislab_geometry SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_geometry to filtered_deps
+-- DEBUG: Processing dependency: vislab_field
+-- DEBUG: vislab_field is a target
+-- DEBUG: vislab_field SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_field to filtered_deps
+-- DEBUG: Processing dependency: vislab_opengl
+-- DEBUG: vislab_opengl is a target
+-- DEBUG: vislab_opengl SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_opengl to filtered_deps
+-- DEBUG: Processing dependency: imgui
+-- DEBUG: imgui is a target
+-- DEBUG: imgui SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding imgui to filtered_deps
+-- DEBUG: Processing dependency: nanoflann
+-- DEBUG: nanoflann is a target
+-- DEBUG: nanoflann SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding nanoflann to filtered_deps
+-- DEBUG: physsim_common filtered dependencies: vislab_core;vislab_graphics;vislab_geometry;vislab_field;vislab_opengl;imgui;nanoflann
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: Recursing into vislab_graphics
+-- DEBUG: vislab_graphics raw dependencies: vislab_geometry;vislab_field
+-- DEBUG: Processing dependency: vislab_geometry
+-- DEBUG: vislab_geometry is a target
+-- DEBUG: vislab_geometry SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_geometry to filtered_deps
+-- DEBUG: Processing dependency: vislab_field
+-- DEBUG: vislab_field is a target
+-- DEBUG: vislab_field SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_field to filtered_deps
+-- DEBUG: vislab_graphics filtered dependencies: vislab_geometry;vislab_field
+-- DEBUG: Recursing into vislab_geometry
+-- DEBUG: vislab_geometry raw dependencies: vislab_core
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: vislab_geometry filtered dependencies: vislab_core
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: vislab_geometry children: vislab_core;eigen;meta
+-- DEBUG: Recursing into vislab_field
+-- DEBUG: vislab_field raw dependencies: vislab_core
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: vislab_field filtered dependencies: vislab_core
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: vislab_field children: vislab_core;eigen;meta
+-- DEBUG: vislab_graphics children: vislab_geometry;vislab_field;vislab_core;eigen;meta
+-- DEBUG: Recursing into vislab_geometry
+-- DEBUG: vislab_geometry raw dependencies: vislab_core
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: vislab_geometry filtered dependencies: vislab_core
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: vislab_geometry children: vislab_core;eigen;meta
+-- DEBUG: Recursing into vislab_field
+-- DEBUG: vislab_field raw dependencies: vislab_core
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: vislab_field filtered dependencies: vislab_core
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: vislab_field children: vislab_core;eigen;meta
+-- DEBUG: Recursing into vislab_opengl
+-- DEBUG: vislab_opengl raw dependencies: vislab_graphics;libglew_static;glfw
+-- DEBUG: Processing dependency: vislab_graphics
+-- DEBUG: vislab_graphics is a target
+-- DEBUG: vislab_graphics SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_graphics to filtered_deps
+-- DEBUG: Processing dependency: libglew_static
+-- DEBUG: libglew_static is a target
+-- DEBUG: libglew_static SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding libglew_static to filtered_deps
+-- DEBUG: Processing dependency: glfw
+-- DEBUG: glfw is a target
+-- DEBUG: glfw SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding glfw to filtered_deps
+-- DEBUG: vislab_opengl filtered dependencies: vislab_graphics;libglew_static;glfw
+-- DEBUG: Recursing into vislab_graphics
+-- DEBUG: vislab_graphics raw dependencies: vislab_geometry;vislab_field
+-- DEBUG: Processing dependency: vislab_geometry
+-- DEBUG: vislab_geometry is a target
+-- DEBUG: vislab_geometry SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_geometry to filtered_deps
+-- DEBUG: Processing dependency: vislab_field
+-- DEBUG: vislab_field is a target
+-- DEBUG: vislab_field SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_field to filtered_deps
+-- DEBUG: vislab_graphics filtered dependencies: vislab_geometry;vislab_field
+-- DEBUG: Recursing into vislab_geometry
+-- DEBUG: vislab_geometry raw dependencies: vislab_core
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: vislab_geometry filtered dependencies: vislab_core
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: vislab_geometry children: vislab_core;eigen;meta
+-- DEBUG: Recursing into vislab_field
+-- DEBUG: vislab_field raw dependencies: vislab_core
+-- DEBUG: Processing dependency: vislab_core
+-- DEBUG: vislab_core is a target
+-- DEBUG: vislab_core SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding vislab_core to filtered_deps
+-- DEBUG: vislab_field filtered dependencies: vislab_core
+-- DEBUG: Recursing into vislab_core
+-- DEBUG: vislab_core raw dependencies: eigen3::eigen;meta::meta;OpenMP::OpenMP_CXX
+-- DEBUG: Processing dependency: eigen3::eigen
+-- DEBUG: eigen3::eigen is a target
+-- DEBUG: eigen3::eigen SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: eigen3::eigen is alias for eigen, adding eigen
+-- DEBUG: Processing dependency: meta::meta
+-- DEBUG: meta::meta is a target
+-- DEBUG: meta::meta SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: meta::meta is alias for meta, adding meta
+-- DEBUG: Processing dependency: OpenMP::OpenMP_CXX
+-- DEBUG: Ignoring OpenMP::OpenMP_CXX (not a target)
+-- DEBUG: vislab_core filtered dependencies: eigen;meta
+-- DEBUG: Recursing into eigen
+-- DEBUG: eigen raw dependencies: current_deps-NOTFOUND
+-- DEBUG: eigen has no dependencies!
+-- DEBUG: eigen filtered dependencies: 
+-- DEBUG: eigen children: 
+-- DEBUG: Recursing into meta
+-- DEBUG: meta raw dependencies: current_deps-NOTFOUND
+-- DEBUG: meta has no dependencies!
+-- DEBUG: meta filtered dependencies: 
+-- DEBUG: meta children: 
+-- DEBUG: vislab_core children: eigen;meta
+-- DEBUG: vislab_field children: vislab_core;eigen;meta
+-- DEBUG: vislab_graphics children: vislab_geometry;vislab_field;vislab_core;eigen;meta
+-- DEBUG: Recursing into libglew_static
+-- DEBUG: libglew_static raw dependencies: OpenGL::OpenGL;OpenGL::GLX;X11::X11;X11::Xext
+-- DEBUG: Processing dependency: OpenGL::OpenGL
+-- DEBUG: Ignoring OpenGL::OpenGL (not a target)
+-- DEBUG: Processing dependency: OpenGL::GLX
+-- DEBUG: Ignoring OpenGL::GLX (not a target)
+-- DEBUG: Processing dependency: X11::X11
+-- DEBUG: Ignoring X11::X11 (not a target)
+-- DEBUG: Processing dependency: X11::Xext
+-- DEBUG: Ignoring X11::Xext (not a target)
+-- DEBUG: libglew_static filtered dependencies: 
+-- DEBUG: libglew_static children: 
+-- DEBUG: Recursing into glfw
+-- DEBUG: glfw raw dependencies: Threads::Threads;/usr/lib/x86_64-linux-gnu/librt.a;/usr/lib/x86_64-linux-gnu/libm.so;dl
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: Processing dependency: /usr/lib/x86_64-linux-gnu/librt.a
+-- DEBUG: Ignoring /usr/lib/x86_64-linux-gnu/librt.a (not a target)
+-- DEBUG: Processing dependency: /usr/lib/x86_64-linux-gnu/libm.so
+-- DEBUG: Ignoring /usr/lib/x86_64-linux-gnu/libm.so (not a target)
+-- DEBUG: Processing dependency: dl
+-- DEBUG: Ignoring dl (not a target)
+-- DEBUG: glfw filtered dependencies: 
+-- DEBUG: glfw children: 
+-- DEBUG: vislab_opengl children: vislab_graphics;libglew_static;glfw;vislab_geometry;vislab_field;vislab_core;eigen;meta
+-- DEBUG: Recursing into imgui
+-- DEBUG: imgui raw dependencies: glfw
+-- DEBUG: Processing dependency: glfw
+-- DEBUG: glfw is a target
+-- DEBUG: glfw SYSTEM property: _is_system-NOTFOUND
+-- DEBUG: Adding glfw to filtered_deps
+-- DEBUG: imgui filtered dependencies: glfw
+-- DEBUG: Recursing into glfw
+-- DEBUG: glfw raw dependencies: Threads::Threads;/usr/lib/x86_64-linux-gnu/librt.a;/usr/lib/x86_64-linux-gnu/libm.so;dl
+-- DEBUG: Processing dependency: Threads::Threads
+-- DEBUG: Threads::Threads is a target
+-- DEBUG: Threads::Threads SYSTEM property: ON
+-- DEBUG: Ignoring Threads::Threads (system target)
+-- DEBUG: Processing dependency: /usr/lib/x86_64-linux-gnu/librt.a
+-- DEBUG: Ignoring /usr/lib/x86_64-linux-gnu/librt.a (not a target)
+-- DEBUG: Processing dependency: /usr/lib/x86_64-linux-gnu/libm.so
+-- DEBUG: Ignoring /usr/lib/x86_64-linux-gnu/libm.so (not a target)
+-- DEBUG: Processing dependency: dl
+-- DEBUG: Ignoring dl (not a target)
+-- DEBUG: glfw filtered dependencies: 
+-- DEBUG: glfw children: 
+-- DEBUG: imgui children: glfw
+-- DEBUG: Recursing into nanoflann
+-- DEBUG: nanoflann raw dependencies: current_deps-NOTFOUND
+-- DEBUG: nanoflann has no dependencies!
+-- DEBUG: nanoflann filtered dependencies: 
+-- DEBUG: nanoflann children: 
+-- DEBUG: physsim_common children: vislab_core;vislab_graphics;vislab_geometry;vislab_field;vislab_opengl;imgui;nanoflann;eigen;meta;libglew_static;glfw
+-- === DEBUGGING generate_init_function for sph_simulation ===
+-- LIBS found: physsim_common;vislab_core;vislab_graphics;vislab_geometry;vislab_field;vislab_opengl;imgui;nanoflann;eigen;meta;libglew_static;glfw
+-- Processing library: physsim_common
+--   -> Not a vislab module: physsim_common
+-- Processing library: vislab_core
+--   -> Found vislab module: core
+-- Processing library: vislab_graphics
+--   -> Found vislab module: graphics
+-- Processing library: vislab_geometry
+--   -> Found vislab module: geometry
+-- Processing library: vislab_field
+--   -> Found vislab module: field
+-- Processing library: vislab_opengl
+--   -> Found vislab module: opengl
+-- Processing library: imgui
+--   -> Not a vislab module: imgui
+-- Processing library: nanoflann
+--   -> Not a vislab module: nanoflann
+-- Processing library: eigen
+--   -> Not a vislab module: eigen
+-- Processing library: meta
+--   -> Not a vislab module: meta
+-- Processing library: libglew_static
+--   -> Not a vislab module: libglew_static
+-- Processing library: glfw
+--   -> Not a vislab module: glfw
+-- Final include_string: #include "init_core.hpp"
+#include "init_graphics.hpp"
+#include "init_geometry.hpp"
+#include "init_field.hpp"
+#include "init_opengl.hpp"
+
+-- Final init_string:                 init_core();
+                init_graphics();
+                init_geometry();
+                init_field();
+                init_opengl();
+
+-- === END DEBUGGING ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/cip/ce/yl34esew/Documents/SPH/SmoothedParticleHydrodynamics_usingCUDA/build
