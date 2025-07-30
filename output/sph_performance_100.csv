@@ -1,2 +1,2 @@
-Frame,Particles,OpenMP_ms,CUDA_ms,Speedup
-100,864,21.4596,10.2238,2.09899
+Frame,Particles,OpenMP_ms,CUDA_ms,Speedup,Density,Stiffness,Viscosity,SupportRadius
+100,2048,84.9504,13.5954,6.24847,1000,1000,0.5,0.45

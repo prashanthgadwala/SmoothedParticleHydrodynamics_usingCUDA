@@ -66,34 +66,40 @@ namespace physsim
             double openmp_time;
             double cuda_time;
             double speedup;
-            double density_time;
-            double pressure_time;
-            double force_time;
-            double integration_time;
+            float density;
+            float stiffness;
+            float viscosity;
+            float support_radius;
         };
         
         std::vector<FrameData> frame_data;
         
-        void recordFrame(int frame, int particles, double omp_time, double cuda_time) {
+        void recordFrame(int frame, int particles, double omp_time, double cuda_time,
+                        float density, float stiffness, float viscosity, float support_radius) {
             FrameData data;
             data.frame = frame;
             data.particle_count = particles;
             data.openmp_time = omp_time;
             data.cuda_time = cuda_time;
             data.speedup = omp_time / cuda_time;
+            data.density = density;
+            data.stiffness = stiffness;
+            data.viscosity = viscosity;
+            data.support_radius = support_radius;
             frame_data.push_back(data);
         }
-        
+
         void exportToCSV(const std::string& filename) {
             std::ofstream file(filename);
-            file << "Frame,Particles,OpenMP_ms,CUDA_ms,Speedup\n";
+            file << "Frame,Particles,OpenMP_ms,CUDA_ms,Speedup,Density,Stiffness,Viscosity,SupportRadius\n";
             for (const auto& data : frame_data) {
                 file << data.frame << "," << data.particle_count << "," 
-                     << data.openmp_time << "," << data.cuda_time << "," 
-                     << data.speedup << "\n";
+                    << data.openmp_time << "," << data.cuda_time << "," 
+                    << data.speedup << "," << data.density << "," << data.stiffness << ","
+                    << data.viscosity << "," << data.support_radius << "\n";
             }
         }
-        
+
         void exportToVTK(const std::string& filename) {
             std::ofstream file(filename);
             file << "# vtk DataFile Version 3.0\n";
@@ -101,12 +107,10 @@ namespace physsim
             file << "ASCII\n";
             file << "DATASET UNSTRUCTURED_GRID\n";
             file << "POINTS " << frame_data.size() << " float\n";
-            
             for (size_t i = 0; i < frame_data.size(); ++i) {
                 file << frame_data[i].frame << " " << frame_data[i].openmp_time << " " 
                      << frame_data[i].cuda_time << "\n";
             }
-            
             file << "POINT_DATA " << frame_data.size() << "\n";
             file << "SCALARS Speedup float 1\n";
             file << "LOOKUP_TABLE default\n";
@@ -114,7 +118,6 @@ namespace physsim
                 file << data.speedup << "\n";
             }
         }
-
     };
 
     /**
@@ -231,7 +234,7 @@ namespace physsim
             mViscosity     = 0.5f;   // Moderate viscosity for testing
             mExponent      = 3;      // Lower exponent for stability
             mRho0          = 1000;
-            mSupportRadius = 0.5f;   // Smaller particles for finer detail
+            mSupportRadius = 0.45f;   // Smaller particles for finer detail
             mBoundaryDamping = 0.5f; // Damping factor for boundary collisions
 
             // Initialize CUDA simulation
@@ -305,7 +308,7 @@ namespace physsim
         {
             // fill a portion of the domain with particles (uniform distribution with stratified sampling)
             Eigen::AlignedBox3f domainToFill(Eigen::Vector3f(-8, -4, 6), Eigen::Vector3f(-6, 4, 8)); // Smaller domain for reasonable particle count
-            Eigen::Vector3i initialRes = ((domainToFill.max() - domainToFill.min()) / mSupportRadius * 1.5).cast<int>(); // Reduced density
+            Eigen::Vector3i initialRes = ((domainToFill.max() - domainToFill.min()) / mSupportRadius * 1.8).cast<int>(); // Reduced density
             mPositions->setSize(initialRes.prod());
             mVelocities->setSize(initialRes.prod());
             mAccelerations->setSize(initialRes.prod());
@@ -483,8 +486,10 @@ namespace physsim
                     double speedup = avgOpenMPTime / avgCudaTime;
                     
                     // Record data for analysis
-                    mPerformanceAnalyzer.recordFrame(mTotalFrames, mPositions->getSize(), 
-                                                   avgOpenMPTime, avgCudaTime);
+                    mPerformanceAnalyzer.recordFrame(
+                        mTotalFrames, mPositions->getSize(), avgOpenMPTime, avgCudaTime,
+                        mRho0, mStiffness, mViscosity, mSupportRadius
+                    );
                     
                     std::cout << "Performance comparison (Frame " << mTotalFrames << "):" << std::endl;
                     std::cout << "  OpenMP average: " << avgOpenMPTime << " ms" << std::endl;
@@ -983,7 +988,7 @@ namespace physsim
         PerformanceAnalyzer mPerformanceAnalyzer;
     };
 
-}
+} 
 
 int main()
 {
@@ -993,7 +998,7 @@ int main()
     physsim::PhyssimWindow window(
         1400,     // width - increased for more GUI space
         900,     // height - increased for more GUI space
-        "Smoothed Particle Hydrodynamics - Velocity Verlet Integration", // title
+        "Smoothed Particle Hydrodynamics Simulation", // title
         std::make_shared<physsim::SmoothedParticleHydrodynamicsSimulation>(),
         false // fullscreen
     );

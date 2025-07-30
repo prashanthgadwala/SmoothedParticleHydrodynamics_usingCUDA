@@ -48,8 +48,27 @@ def plot_performance_analysis(csv_file):
     ax4.grid(True)
     
     plt.tight_layout()
-    plt.savefig('sph_performance_analysis.png', dpi=300, bbox_inches='tight')
+    # Save with particle count in filename
+    particle_count = int(df['Particles'].iloc[0])
+    plt.savefig(f'sph_performance_{particle_count}_particles.png', dpi=300, bbox_inches='tight')
     plt.show()
 
-# Usage
-plot_performance_analysis('sph_performance_500.csv')
+# def get_latest_performance_csv():
+#     import glob
+#     import re
+#     files = glob.glob(os.path.join('output', 'sph_performance_*.csv'))
+#     if not files:
+#         raise FileNotFoundError('No performance CSV files found in output directory.')
+#     # Extract frame numbers
+#     def extract_frame(f):
+#         m = re.search(r'sph_performance_(\d+)\.csv$', f)  # <-- fixed regex
+#         return int(m.group(1)) if m else -1
+#     files = [(f, extract_frame(f)) for f in files]
+#     files = [f for f in files if f[1] != -1]
+#     if not files:
+#         raise FileNotFoundError('No valid performance CSV files found.')
+#     latest = max(files, key=lambda x: x[1])[0]
+#     return os.path.basename(latest)
+
+# Usage: automatically plot the latest file
+plot_performance_analysis('sph_performance_2500.csv')
